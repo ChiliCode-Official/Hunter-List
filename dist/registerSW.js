@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Hunter-List/sw.js', { scope: '/Hunter-List/' })})}
