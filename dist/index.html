@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5a6b1e" />
+    <meta name="description" content="Hunter List — La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+    <link rel="icon" type="image/png" href="/Hunter-List/logo.png" />
+    <link rel="apple-touch-icon" href="/Hunter-List/logo.png" />
+    <link rel="manifest" href="/Hunter-List/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <title>Hunter List — Héctor</title>
+    <script type="module" crossorigin src="/Hunter-List/assets/index-BbOzFAG5.js"></script>
+    <link rel="stylesheet" crossorigin href="/Hunter-List/assets/index-AdKDI0h6.css">
+  <link rel="manifest" href="/Hunter-List/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/Hunter-List/registerSW.js"></script></head>
+  <body>
+    <div id="app">
+      <!-- Header -->
+      <header class="main-header">
+        <div class="header-inner">
+          <div class="header-logo-block">
+            <img src="https://i.imgur.com/GteuRef.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
+            <div class="header-titles">
+              <h1 class="app-title">Hunter List</h1>
+              <span class="app-owner">Héctor's Collection</span>
+            </div>
+          </div>
+          <div class="header-stats" id="header-stats"></div>
+        </div>
+      </header>
+
+      <!-- Collections Tabs -->
+      <nav class="collections-nav" id="collections-nav">
+        <div class="collections-tabs" id="collections-tabs"></div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content" id="main-content">
+        <div class="collection-view" id="collection-view"></div>
+      </main>
+
+      <!-- Progress Bar (fixed bottom) -->
+      <div class="progress-bar-container" id="progress-bar-container">
+        <div class="progress-bar-inner">
+          <span class="progress-label" id="progress-label">0 / 0 Items</span>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <span class="progress-pct" id="progress-pct">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Edit / Add Item -->
+    <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-title">Editar Elemento</h2>
+          <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="modal-input" id="modal-input" placeholder="Nombre del elemento..." maxlength="80" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" id="modal-delete" title="Eliminar">🗑 Eliminar</button>
+          <button class="btn btn-primary" id="modal-save">💾 Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Add New Item -->
+    <div class="modal-overlay" id="add-modal-overlay" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <h2 class="modal-title">Nuevo Elemento</h2>
+          <button class="modal-close" id="add-modal-close" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="modal-body">
+          <label class="modal-label" for="add-modal-input">Nombre del elemento</label>
+          <input type="text" class="modal-input" id="add-modal-input" placeholder="Ej: Cuchillo de caza..." maxlength="80" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="add-modal-cancel">Cancelar</button>
+          <button class="btn btn-primary" id="add-modal-save">➕ Añadir</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
