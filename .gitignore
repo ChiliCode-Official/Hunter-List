@@ -1,0 +1,30 @@
+# Dependencias — NUNCA subir esto
+node_modules/
+
+# Build de producción — lo genera gh-pages automáticamente
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache Vite
+.vite/
