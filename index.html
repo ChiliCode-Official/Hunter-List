@@ -7,7 +7,7 @@
     <meta name="description" content="Hunter List — La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
     <link rel="icon" type="image/png" href="/Hunter-List/logo.png" />
     <link rel="apple-touch-icon" href="/Hunter-List/logo.png" />
-    <link rel="manifest" href="/Hunter-List/manifest.webmanifest" />
+    <link rel="manifest" href="/Hunter-List/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -88,5 +88,12 @@
     </div>
 
     <script type="module" src="./src/main.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/Hunter-List/sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

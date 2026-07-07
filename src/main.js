@@ -402,13 +402,6 @@ addModalInput.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { closeModal(addModalOverlay); addTarget = null; }
 });
 
-// ── PWA Service Worker ───────────────────────────────
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/Hunter-List/sw.js').catch(() => {});
-  });
-}
-
 // ── Init ─────────────────────────────────────────────
 function init() {
   renderTabs();
