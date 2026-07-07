@@ -93,8 +93,16 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      // Validate: ensure all keys are present
-      if (parsed.collections && parsed.data) return parsed;
+      if (
+        parsed &&
+        typeof parsed === "object" &&
+        Array.isArray(parsed.collections) &&
+        typeof parsed.data === "object" &&
+        parsed.data !== null &&
+        typeof parsed.activeCollection === "string"
+      ) {
+        return parsed;
+      }
     }
   } catch (_) {}
   return buildDefaultState();
