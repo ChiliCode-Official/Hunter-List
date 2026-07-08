@@ -76,16 +76,37 @@ const DEFAULT_COLLECTIONS = [
     color: "blue"
   },
   {
-    id: "animales-grandes",
-    name: "Animales Grandes",
+    id: "palomas",
+    name: "Palomas",
+    icon: "🕊️",
+    subtitle: "Cacería de Palomas",
+    color: "blue"
+  },
+  {
+    id: "venados",
+    name: "Venados",
     icon: "🦌",
-    subtitle: "Caza Mayor",
+    subtitle: "Cacería de Venados",
     color: "green"
+  },
+  {
+    id: "montana",
+    name: "Montaña",
+    icon: "⛰️",
+    subtitle: "Cacería de Montaña",
+    color: "green"
+  },
+  {
+    id: "africa",
+    name: "África",
+    icon: "🦁",
+    subtitle: "Safari en África",
+    color: "gold"
   }
 ];
 
 // ── Storage Key ─────────────────────────────────────
-const STORAGE_KEY = "hunterlist_v1";
+const STORAGE_KEY = "hunterlist_v2";
 
 // ── Load State ──────────────────────────────────────
 function loadState() {

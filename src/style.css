@@ -366,13 +366,24 @@ h1, h2, h3 {
 
 /* ── CATEGORIES GRID ───────────────────────────────── */
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 20px;
+  columns: 1;
+  column-gap: 20px;
+}
+@media (min-width: 740px) {
+  .categories-grid {
+    columns: 2;
+  }
+}
+@media (min-width: 1100px) {
+  .categories-grid {
+    columns: 3;
+  }
 }
 
 /* ── CATEGORY CARD ─────────────────────────────────── */
 .category-card {
+  break-inside: avoid;
+  margin-bottom: 20px;
   background: rgba(14, 26, 14, 0.75);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg);

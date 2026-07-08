@@ -10,6 +10,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Hunter List — Héctor" />
+  <meta property="og:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hunter List — Héctor" />
+  <meta name="twitter:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+  <meta name="twitter:image" content="/logo.png" />
+
   <title>Hunter List — Héctor</title>
   <style>
 :root {
@@ -176,8 +187,11 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   color: var(--clr-danger); cursor: pointer; transition: all var(--tx-fast);
 }
 .btn-reset-collection:hover { background: rgba(192,57,43,0.25); border-color: var(--clr-danger); color: var(--clr-danger-hover); }
-.categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+.categories-grid { columns: 1; column-gap: 20px; }
+@media (min-width: 740px) { .categories-grid { columns: 2; } }
+@media (min-width: 1100px) { .categories-grid { columns: 3; } }
 .category-card {
+  break-inside: avoid; margin-bottom: 20px;
   background: rgba(14, 26, 14, 0.75); border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg); overflow: hidden;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -305,7 +319,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   .main-logo { height: 52px; }
   .app-title  { font-size: 1.4rem; }
   .app-owner  { display: none; }
-  .categories-grid { grid-template-columns: 1fr; }
+  .categories-grid { columns: 1; }
   .main-content { padding: 16px 14px calc(var(--progress-h) + 20px); }
   .header-inner { padding: 0 14px; }
   .collections-tabs { padding: 0 14px; }
@@ -330,7 +344,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     <header class="main-header">
       <div class="header-inner">
         <div class="header-logo-block">
-          <img src="https://i.imgur.com/GteuRef.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
+          <img src="/logo.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
           <div class="header-titles">
             <h1 class="app-title">Hunter List</h1>
             <span class="app-owner">Héctor's Collection</span>
@@ -459,11 +473,14 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   };
 
   var DEFAULT_COLLECTIONS = [
-    { id: "patos",           name: "Patos",           icon: "🦆", subtitle: "Cacería de Patos", color: "blue" },
-    { id: "animales-grandes",name: "Animales Grandes", icon: "🦌", subtitle: "Caza Mayor",        color: "green" }
+    { id: "patos",   name: "Patos",   icon: "🦆", subtitle: "Cacería de Patos", color: "blue" },
+    { id: "palomas", name: "Palomas", icon: "🕊️", subtitle: "Cacería de Palomas", color: "blue" },
+    { id: "venados", name: "Venados", icon: "🦌", subtitle: "Cacería de Venados", color: "green" },
+    { id: "montana", name: "Montaña", icon: "⛰️", subtitle: "Cacería de Montaña", color: "green" },
+    { id: "africa",  name: "África",  icon: "🦁", subtitle: "Safari en África", color: "gold" }
   ];
 
-  var STORAGE_KEY = "hunterlist_v1";
+  var STORAGE_KEY = "hunterlist_v2";
 
   function buildDefaultState() {
     var data = {};
