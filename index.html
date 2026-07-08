@@ -11,6 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   
+  <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Hunter List" />
+  
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Hunter List — Héctor" />
   <meta property="og:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
@@ -1013,9 +1018,19 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   });
 
   // ── INIT ─────────────────────────────────────────────
+  if (!state.activeCollection) {
+    state.activeCollection = state.collections[0].id;
+    saveState(state);
+  }
   renderTabs();
   renderCollection();
   updateGlobalProgress();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
   </script>
 </body>
 </html>

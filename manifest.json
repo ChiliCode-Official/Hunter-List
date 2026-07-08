@@ -1,0 +1,21 @@
+{
+  "name": "Hunter List",
+  "short_name": "Hunter List",
+  "description": "La lista de cacería de Héctor. Elegante, organizada y lista para el campo.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080f08",
+  "theme_color": "#111f11",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
