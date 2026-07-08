@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#5a6b1e" />
   <meta name="description" content="Hunter List — La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-  <link rel="icon" type="image/png" href="/Hunter-List/assets/logo-mD4MkIvF.png" />
-  <link rel="apple-touch-icon" href="/Hunter-List/assets/logo-mD4MkIvF.png" />
+  <link rel="icon" type="image/jpeg" href="/Hunter-List/assets/logo-mD4MkIvF.jpg" />
+  <link rel="apple-touch-icon" href="/Hunter-List/assets/logo-mD4MkIvF.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   
-  <link rel="manifest" href="/Hunter-List/assets/manifest-BLAnl9Oe.json" />
+  <link rel="manifest" href="/Hunter-List/assets/manifest-euWyskSL.json" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Hunter List" />
@@ -19,16 +19,16 @@
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Hunter List — Héctor" />
   <meta property="og:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-  <meta property="og:image" content="https://lrodr.github.io/Hunter-List/logo.png" />
+  <meta property="og:image" content="https://lrodr.github.io/Hunter-List/logo.jpg" />
   <meta property="og:image:width" content="512" />
   <meta property="og:image:height" content="512" />
-  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:url" content="https://lrodr.github.io/Hunter-List/" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Hunter List — Héctor" />
   <meta name="twitter:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-  <meta name="twitter:image" content="https://lrodr.github.io/Hunter-List/logo.png" />
+  <meta name="twitter:image" content="https://lrodr.github.io/Hunter-List/logo.jpg" />
 
   <title>Hunter List — Héctor</title>
   <style>
@@ -187,7 +187,14 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--clr-border);
 }
-.collection-title-block { display: flex; align-items: center; gap: 14px; }
+.collection-title-block { 
+  display: flex; align-items: center; gap: 14px; 
+  animation: headerFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes headerFadeIn {
+  from { opacity: 0; transform: translateX(-15px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 .collection-icon { font-size: 2.2rem; line-height: 1; filter: drop-shadow(0 0 8px rgba(76,175,80,0.5)); }
 .collection-title { font-size: 1.8rem; font-weight: 700; color: var(--clr-text-bright); text-shadow: 0 0 20px rgba(76,175,80,0.3); }
 .collection-subtitle { font-size: 0.72rem; color: var(--clr-text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
@@ -196,8 +203,22 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   border-radius: var(--radius-sm); padding: 8px 16px;
   font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 0.1em;
   color: var(--clr-danger); cursor: pointer; transition: all var(--tx-fast);
+  animation: resetBtnIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  display: flex; align-items: center; gap: 6px;
+}
+@keyframes resetBtnIn {
+  from { opacity: 0; transform: translateX(15px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 .btn-reset-collection:hover { background: rgba(192,57,43,0.25); border-color: var(--clr-danger); color: var(--clr-danger-hover); }
+.btn-reset-collection.spinning .reset-icon {
+  display: inline-block;
+  animation: spinReset 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes spinReset {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
 .categories-grid { columns: 1; column-gap: 20px; }
 @media (min-width: 740px) { .categories-grid { columns: 2; } }
 @media (min-width: 1100px) { .categories-grid { columns: 3; } }
@@ -207,9 +228,24 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   border-radius: var(--radius-lg); overflow: hidden;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   transition: border-color var(--tx-mid), box-shadow var(--tx-mid), transform var(--tx-mid);
-  animation: cardIn var(--tx-slow) ease both;
+  animation: cardIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-@keyframes cardIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+@keyframes cardIn { 
+  from { opacity: 0; transform: translateY(24px) scale(0.96); } 
+  to { opacity: 1; transform: translateY(0) scale(1); } 
+}
+.category-card:nth-child(1) { animation-delay: 0.02s; }
+.category-card:nth-child(2) { animation-delay: 0.05s; }
+.category-card:nth-child(3) { animation-delay: 0.08s; }
+.category-card:nth-child(4) { animation-delay: 0.11s; }
+.category-card:nth-child(5) { animation-delay: 0.14s; }
+.category-card:nth-child(6) { animation-delay: 0.17s; }
+.category-card:nth-child(7) { animation-delay: 0.20s; }
+.category-card:nth-child(8) { animation-delay: 0.23s; }
+.category-card:nth-child(9) { animation-delay: 0.26s; }
+.category-card:nth-child(10) { animation-delay: 0.29s; }
+.category-card:nth-child(11) { animation-delay: 0.32s; }
+.category-card:nth-child(12) { animation-delay: 0.35s; }
 .category-card:hover { border-color: var(--clr-border-bright); box-shadow: var(--shadow-green); transform: translateY(-2px); }
 .category-card-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -226,17 +262,63 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 .category-progress-ring { position: relative; width: 36px; height: 36px; flex-shrink: 0; }
 .category-progress-ring svg { transform: rotate(-90deg); }
 .ring-bg  { fill: none; stroke: rgba(61,140,61,0.15); stroke-width: 3; }
-.ring-fill { fill: none; stroke: var(--clr-green-bright); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+.ring-fill { fill: none; stroke: var(--clr-green-bright); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .ring-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: var(--clr-green-bright); font-family: var(--font-heading); }
 .category-chevron { color: var(--clr-text-muted); font-size: 0.9rem; transition: transform var(--tx-mid); }
 .category-card.collapsed .category-chevron { transform: rotate(-90deg); }
-.category-card.collapsed .category-items-list { display: none; }
-.category-card.collapsed .add-item-btn { display: none; }
-.category-items-list { list-style: none; padding: 8px 0; }
+.category-card.collapsed .category-items-list {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.category-card.collapsed .add-item-btn {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.category-items-list {
+  list-style: none;
+  padding: 8px 0;
+  max-height: 1000px;
+  overflow: hidden;
+  opacity: 1;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease, opacity 0.4s ease;
+}
+/* No animation modifier (used during updates to prevent full page re-animating) */
+.categories-grid.no-anim .category-card {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 .item-row {
   display: flex; align-items: center; gap: 10px; padding: 12px 18px; min-height: 48px;
   border-bottom: 1px solid rgba(61,140,61,0.06);
   transition: background var(--tx-fast), opacity var(--tx-mid); cursor: pointer;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Individual Item Animations */
+.item-row.slide-out-right {
+  animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+@keyframes slideOutRight {
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+.item-row.slide-in-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes slideInLeft {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 .item-row:last-child { border-bottom: none; }
 .item-row:hover { background: rgba(61,140,61,0.06); }
@@ -286,7 +368,9 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   display: flex; align-items: center; gap: 8px; width: 100%;
   padding: 14px 18px; background: transparent; border: none; min-height: 48px;
   border-top: 1px dashed rgba(61,140,61,0.18); color: var(--clr-text-muted);
-  font-size: 0.9rem; font-family: var(--font-body); cursor: pointer; transition: all var(--tx-fast);
+  font-size: 0.9rem; font-family: var(--font-body); cursor: pointer;
+  max-height: 50px; opacity: 1; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease, opacity 0.4s ease, border 0.4s ease, color var(--tx-fast), background var(--tx-fast);
 }
 .add-item-btn:hover { color: var(--clr-green-bright); background: rgba(61,140,61,0.05); }
 .add-item-btn .plus-icon {
@@ -372,7 +456,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   height: 100%; border-radius: var(--radius-pill);
   background: linear-gradient(90deg, var(--clr-green-mid), var(--clr-green-bright), var(--clr-blue-accent));
   background-size: 200% 100%; animation: shimmer 2.5s linear infinite;
-  transition: width 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px rgba(76,175,80,0.5);
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 8px rgba(76,175,80,0.5);
 }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .progress-pct { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; color: var(--clr-green-bright); letter-spacing: 0.06em; min-width: 42px; text-align: right; text-shadow: 0 0 8px rgba(76,175,80,0.5); }
@@ -656,6 +740,8 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   var lastDeletedItem = null;
   var undoToastEl = null;
   var undoTimeout = null;
+  var isNavigatingTab = true;
+  var restoredItemId = null;
 
   // ── DOM REFS ─────────────────────────────────────────
   var collectionsTabsEl = document.getElementById('collections-tabs');
@@ -742,6 +828,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
       btn.innerHTML = '<span>' + col.icon + '</span><span>' + escapeHtml(col.name) + '</span>' +
         '<span class="tab-badge">' + stats.checked + '/' + stats.total + '</span>';
       btn.addEventListener('click', (function(id){ return function() {
+        isNavigatingTab = true;
         state.activeCollection = id;
         saveState(state);
         renderTabs();
@@ -873,6 +960,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     var item = lastDeletedItem.item;
     var idx = lastDeletedItem.index;
     
+    restoredItemId = item.id;
     state.data[colId][catName].items.splice(idx, 0, item);
     saveState(state);
     renderCollection();
@@ -927,8 +1015,8 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
       '<button class="btn-text" id="btn-expand-all">Abrir todo</button> <span style="color:var(--clr-text-muted);font-size:0.7rem">•</span> <button class="btn-text" id="btn-collapse-all">Cerrar todo</button>' +
       '</div></div>' +
       '</div>' +
-      '<button class="btn-reset-collection" data-col-id="' + colId + '" title="Resetear">↺ Resetear</button>' +
-      '</div><div class="categories-grid">';
+      '<button class="btn-reset-collection" data-col-id="' + colId + '" title="Resetear"><span class="reset-icon">↺</span> Resetear</button>' +
+      '</div><div class="categories-grid' + (isNavigatingTab ? '' : ' no-anim') + '">';
 
     var cats = Object.keys(colData);
     for (var ki=0; ki<cats.length; ki++) {
@@ -953,7 +1041,8 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
       for (var ii=0; ii<catData.items.length; ii++) {
         var item = catData.items[ii];
         var chk = item.checked ? ' checked' : '';
-        html += '<li class="item-row' + chk + '" data-col="' + colId + '" data-cat="' + escapeHtml(catName) + '" data-item-id="' + item.id + '" tabindex="0" role="checkbox" aria-checked="' + item.checked + '">' +
+        var restoredClass = (item.id === restoredItemId) ? ' slide-in-left' : '';
+        html += '<li class="item-row' + chk + restoredClass + '" data-col="' + colId + '" data-cat="' + escapeHtml(catName) + '" data-item-id="' + item.id + '" tabindex="0" role="checkbox" aria-checked="' + item.checked + '">' +
           '<div class="item-checkbox-wrap"><span class="checkmark">✓</span></div>' +
           '<span class="item-label">' + escapeHtml(item.name) + '</span>' +
           '<div class="item-actions">' +
@@ -972,6 +1061,8 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     html += '</div>';
     collectionViewEl.innerHTML = html;
     attachListeners();
+    isNavigatingTab = false;
+    restoredItemId = null;
   }
 
   // ── EVENT LISTENERS ───────────────────────────────────
@@ -1055,26 +1146,36 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     for (var db=0; db<deleteBtns.length; db++) {
       deleteBtns[db].addEventListener('click', function(e) {
         e.stopPropagation();
-        var colId   = this.dataset.deleteCol;
-        var catName = this.dataset.deleteCat;
-        var itemId  = this.dataset.deleteItem;
+        var btn = this;
+        var colId   = btn.dataset.deleteCol;
+        var catName = btn.dataset.deleteCat;
+        var itemId  = btn.dataset.deleteItem;
         var items   = state.data[colId][catName].items;
-        for (var j=0; j<items.length; j++) {
-          if (items[j].id === itemId) {
-            lastDeletedItem = {
-              colId: colId,
-              catName: catName,
-              item: items[j],
-              index: j
-            };
-            items.splice(j, 1);
-            saveState(state);
-            renderCollection();
-            updateGlobalProgress();
-            showUndoToast('Elemento eliminado');
-            break;
-          }
+        
+        // Find row to animate
+        var row = btn.closest('.item-row');
+        if (row) {
+          row.classList.add('slide-out-right');
         }
+
+        setTimeout(function() {
+          for (var j=0; j<items.length; j++) {
+            if (items[j].id === itemId) {
+              lastDeletedItem = {
+                colId: colId,
+                catName: catName,
+                item: items[j],
+                index: j
+              };
+              items.splice(j, 1);
+              saveState(state);
+              renderCollection();
+              updateGlobalProgress();
+              showUndoToast('Elemento eliminado');
+              break;
+            }
+          }
+        }, 300);
       });
     }
 
@@ -1109,13 +1210,54 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
       resetBtn.addEventListener('click', function() {
         var colId = this.dataset.colId;
         if (!confirm('¿Resetear todos los checks de esta colección?')) return;
-        var cats = Object.values(state.data[colId]);
-        for (var i=0; i<cats.length; i++)
-          for (var j=0; j<cats[i].items.length; j++) cats[i].items[j].checked = false;
-        saveState(state);
-        renderCollection();
-        updateGlobalProgress();
-        showToast('✓ Colección reseteada');
+        
+        resetBtn.classList.add('spinning');
+        
+        // 1. Visual animation in DOM: remove checked classes and reset progress indicators
+        var checkedRows = collectionViewEl.querySelectorAll('.item-row.checked');
+        for (var ri=0; ri<checkedRows.length; ri++) {
+          checkedRows[ri].classList.remove('checked');
+          checkedRows[ri].setAttribute('aria-checked', 'false');
+        }
+
+        // 2. Animate global progress bar to 0%
+        var progressFill = document.getElementById('progress-fill');
+        var progressPct = document.getElementById('progress-pct');
+        var progressLabel = document.getElementById('progress-label');
+        if (progressFill) progressFill.style.width = '0%';
+        if (progressPct) progressPct.textContent = '0%';
+        if (progressLabel) progressLabel.textContent = '0 / 0 Items';
+
+        var container = document.getElementById('progress-bar-container');
+        if (container) container.classList.remove('complete');
+
+        // 3. Reset all rings and counts
+        var cards = collectionViewEl.querySelectorAll('.category-card');
+        for (var ci=0; ci<cards.length; ci++) {
+          var ring = cards[ci].querySelector('.category-progress-ring');
+          if (ring) {
+            // Find total items in this card to show "0 / total"
+            var itemsList = cards[ci].querySelector('.category-items-list');
+            var totalItems = itemsList ? itemsList.children.length : 0;
+            ring.innerHTML = buildRingSVG(0, totalItems);
+            var countEl = cards[ci].querySelector('.category-count');
+            if (countEl) countEl.textContent = '0 / ' + totalItems;
+          }
+        }
+
+        // 4. Wait for CSS animations to complete, then update state and sync
+        setTimeout(function() {
+          var cats = Object.values(state.data[colId]);
+          for (var i=0; i<cats.length; i++) {
+            for (var j=0; j<cats[i].items.length; j++) {
+              cats[i].items[j].checked = false;
+            }
+          }
+          saveState(state);
+          renderCollection();
+          updateGlobalProgress();
+          showToast('✓ Colección reseteada');
+        }, 450);
       });
     }
   }

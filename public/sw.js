@@ -4,7 +4,7 @@ const BASE = '/Hunter-List/';
 const ASSETS = [
   BASE,
   BASE + 'index.html',
-  BASE + 'logo.png',
+  BASE + 'logo.jpg',
   BASE + 'manifest.json',
 ];
 

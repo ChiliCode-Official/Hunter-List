@@ -12,6 +12,8 @@ let addTarget  = null; // { collectionId, catName }
 let lastDeletedItem = null;
 let undoToastEl = null;
 let undoTimeout = null;
+let isNavigatingTab = true;
+let restoredItemId = null;
 
 // ── DOM References ───────────────────────────────────
 const collectionsTabsEl  = document.getElementById('collections-tabs');
@@ -107,6 +109,7 @@ function renderTabs() {
       <span class="tab-badge">${stats.checked}/${stats.total}</span>
     `;
     btn.addEventListener('click', () => {
+      isNavigatingTab = true;
       state.activeCollection = col.id;
       saveState(state);
       renderTabs();
@@ -176,10 +179,10 @@ function renderCollection() {
         </div>
       </div>
       <button class="btn-reset-collection" data-col-id="${colId}" title="Resetear esta colección">
-        ↺ Resetear
+        <span class="reset-icon">↺</span> Resetear
       </button>
     </div>
-    <div class="categories-grid">
+    <div class="categories-grid${isNavigatingTab ? '' : ' no-anim'}">
   `;
 
   for (const [catName, catData] of Object.entries(colData)) {
@@ -208,8 +211,9 @@ function renderCollection() {
 
     for (const item of catData.items) {
       const checkedClass = item.checked ? 'checked' : '';
+      const restoredClass = (item.id === restoredItemId) ? ' slide-in-left' : '';
       html += `
-        <li class="item-row ${checkedClass}" 
+        <li class="item-row ${checkedClass}${restoredClass}" 
             data-col="${colId}" data-cat="${catName}" data-item-id="${item.id}"
             tabindex="0" role="checkbox" aria-checked="${item.checked}">
           <div class="item-checkbox-wrap">
@@ -247,6 +251,8 @@ function renderCollection() {
   html += `</div>`;
   collectionViewEl.innerHTML = html;
   attachCollectionListeners();
+  isNavigatingTab = false;
+  restoredItemId = null;
 }
 
 // ── Escape HTML ──────────────────────────────────────
@@ -326,17 +332,28 @@ function attachCollectionListeners() {
       const items  = state.data[colId][catName].items;
       const idx    = items.findIndex(i => i.id === itemId);
       if (idx !== -1) {
-        lastDeletedItem = {
-          colId,
-          catName,
-          item: items[idx],
-          index: idx
-        };
-        items.splice(idx, 1);
-        saveState(state);
-        renderCollection();
-        updateGlobalProgress();
-        showUndoToast('Elemento eliminado');
+        const row = btn.closest('.item-row');
+        if (row) {
+          row.classList.add('slide-out-right');
+        }
+
+        setTimeout(() => {
+          // Re-verify index just in case state changed
+          const currentIdx = items.findIndex(i => i.id === itemId);
+          if (currentIdx !== -1) {
+            lastDeletedItem = {
+              colId,
+              catName,
+              item: items[currentIdx],
+              index: currentIdx
+            };
+            items.splice(currentIdx, 1);
+            saveState(state);
+            renderCollection();
+            updateGlobalProgress();
+            showUndoToast('Elemento eliminado');
+          }
+        }, 300);
       }
     });
   });
@@ -355,13 +372,52 @@ function attachCollectionListeners() {
   collectionViewEl.querySelector('.btn-reset-collection')?.addEventListener('click', (e) => {
     const colId = e.currentTarget.dataset.colId;
     if (!confirm(`¿Resetear todos los checks de "${colId}"? (No borra ítems editados)`)) return;
-    for (const cat of Object.values(state.data[colId])) {
-      for (const item of cat.items) item.checked = false;
-    }
-    saveState(state);
-    renderCollection();
-    updateGlobalProgress();
-    showToast('✓ Colección reseteada');
+
+    const resetBtn = e.currentTarget;
+    resetBtn.classList.add('spinning');
+
+    // 1. Visual animation in DOM: remove checked classes and reset progress indicators
+    const checkedRows = collectionViewEl.querySelectorAll('.item-row.checked');
+    checkedRows.forEach(row => {
+      row.classList.remove('checked');
+      row.setAttribute('aria-checked', 'false');
+    });
+
+    // 2. Animate global progress bar to 0%
+    const progressFill = document.getElementById('progress-fill');
+    const progressPct = document.getElementById('progress-pct');
+    const progressLabel = document.getElementById('progress-label');
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressPct) progressPct.textContent = '0%';
+    if (progressLabel) progressLabel.textContent = '0 / 0 Items';
+
+    const container = document.getElementById('progress-bar-container');
+    if (container) container.classList.remove('complete');
+
+    // 3. Reset all rings and counts
+    const cards = collectionViewEl.querySelectorAll('.category-card');
+    cards.forEach(card => {
+      const ring = card.querySelector('.category-progress-ring');
+      if (ring) {
+        // Find total items in this card to show "0 / total"
+        const itemsList = card.querySelector('.category-items-list');
+        const totalItems = itemsList ? itemsList.children.length : 0;
+        ring.innerHTML = buildRingSVG(0, totalItems);
+        const countEl = card.querySelector('.category-count');
+        if (countEl) countEl.textContent = `0 / ${totalItems}`;
+      }
+    });
+
+    // 4. Wait for CSS animations to complete, then update state and sync
+    setTimeout(() => {
+      for (const cat of Object.values(state.data[colId])) {
+        for (const item of cat.items) item.checked = false;
+      }
+      saveState(state);
+      renderCollection();
+      updateGlobalProgress();
+      showToast('✓ Colección reseteada');
+    }, 450);
   });
 
   // Expand / Collapse all
@@ -473,6 +529,7 @@ function dismissUndoToast(immediate) {
 function performUndo() {
   if (!lastDeletedItem) return;
   const { colId, catName, item, index } = lastDeletedItem;
+  restoredItemId = item.id;
   state.data[colId][catName].items.splice(index, 0, item);
   saveState(state);
   renderCollection();

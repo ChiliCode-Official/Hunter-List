@@ -9,15 +9,15 @@
   "scope": "/Hunter-List/",
   "icons": [
     {
-      "src": "/Hunter-List/logo.png",
+      "src": "/Hunter-List/logo.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "/Hunter-List/logo.png",
+      "src": "/Hunter-List/logo.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     }
   ]

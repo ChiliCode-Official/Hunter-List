@@ -2,7 +2,7 @@ const CACHE_NAME = 'hunter-list-v1';
 const urlsToCache = [
   './',
   './index.html',
-  './logo.png'
+  './logo.jpg'
 ];
 
 self.addEventListener('install', event => {
