@@ -9,6 +9,9 @@ import { loadState, saveState, buildDefaultState } from './data.js';
 let state = loadState();
 let editTarget = null; // { collectionId, catName, itemId }
 let addTarget  = null; // { collectionId, catName }
+let lastDeletedItem = null;
+let undoToastEl = null;
+let undoTimeout = null;
 
 // ── DOM References ───────────────────────────────────
 const collectionsTabsEl  = document.getElementById('collections-tabs');
@@ -213,11 +216,18 @@ function renderCollection() {
             <span class="checkmark">✓</span>
           </div>
           <span class="item-label">${escapeHtml(item.name)}</span>
-          <button class="item-edit-btn" 
-                  data-edit-col="${colId}" 
-                  data-edit-cat="${catName}" 
-                  data-edit-item="${item.id}"
-                  title="Editar">✎</button>
+          <div class="item-actions">
+            <button class="item-edit-btn" 
+                    data-edit-col="${colId}" 
+                    data-edit-cat="${catName}" 
+                    data-edit-item="${item.id}"
+                    title="Editar">✎</button>
+            <button class="item-delete-btn" 
+                    data-delete-col="${colId}" 
+                    data-delete-cat="${catName}" 
+                    data-delete-item="${item.id}"
+                    title="Borrar">🗑</button>
+          </div>
         </li>
       `;
     }
@@ -261,8 +271,8 @@ function attachCollectionListeners() {
   // Toggle item checked
   collectionViewEl.querySelectorAll('.item-row').forEach(row => {
     const toggle = (e) => {
-      // Don't toggle when clicking the edit button
-      if (e.target.closest('.item-edit-btn')) return;
+      // Don't toggle when clicking action buttons
+      if (e.target.closest('.item-edit-btn') || e.target.closest('.item-delete-btn')) return;
       const colId  = row.dataset.col;
       const catName = row.dataset.cat;
       const itemId = row.dataset.itemId;
@@ -306,6 +316,31 @@ function attachCollectionListeners() {
     });
   });
 
+  // Delete item buttons
+  collectionViewEl.querySelectorAll('.item-delete-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const colId  = btn.dataset.deleteCol;
+      const catName = btn.dataset.deleteCat;
+      const itemId = btn.dataset.deleteItem;
+      const items  = state.data[colId][catName].items;
+      const idx    = items.findIndex(i => i.id === itemId);
+      if (idx !== -1) {
+        lastDeletedItem = {
+          colId,
+          catName,
+          item: items[idx],
+          index: idx
+        };
+        items.splice(idx, 1);
+        saveState(state);
+        renderCollection();
+        updateGlobalProgress();
+        showUndoToast('Elemento eliminado');
+      }
+    });
+  });
+
   // Add item buttons
   collectionViewEl.querySelectorAll('.add-item-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -343,6 +378,108 @@ function attachCollectionListeners() {
     saveState(state);
     renderCollection();
   });
+}
+
+// ── Undo Handling ────────────────────────────────────
+function initUndoToast() {
+  if (document.getElementById('undo-toast')) {
+    undoToastEl = document.getElementById('undo-toast');
+    return;
+  }
+  const toast = document.createElement('div');
+  toast.id = 'undo-toast';
+  toast.className = 'undo-toast';
+  toast.innerHTML = `
+    <span id="undo-message">Elemento eliminado</span>
+    <button class="undo-btn" id="undo-action-btn">Deshacer</button>
+  `;
+  document.body.appendChild(toast);
+  undoToastEl = toast;
+
+  document.getElementById('undo-action-btn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    performUndo();
+  });
+
+  // Swipe down gesture detection
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  const onStart = (e) => {
+    startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+    isDragging = true;
+    undoToastEl.style.transition = 'none';
+  };
+
+  const onMove = (e) => {
+    if (!isDragging) return;
+    const y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+    const diffY = y - startY;
+    if (diffY > 0) {
+      currentY = diffY;
+      undoToastEl.style.transform = `translateX(-50%) translateY(${currentY}px)`;
+    }
+  };
+
+  const onEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+    if (currentY > 40) {
+      dismissUndoToast(true);
+    } else {
+      undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+    }
+    currentY = 0;
+  };
+
+  undoToastEl.addEventListener('touchstart', onStart);
+  undoToastEl.addEventListener('touchmove', onMove);
+  undoToastEl.addEventListener('touchend', onEnd);
+
+  undoToastEl.addEventListener('mousedown', onStart);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onEnd);
+}
+
+function showUndoToast(msg) {
+  initUndoToast();
+  const msgEl = document.getElementById('undo-message');
+  if (msgEl) msgEl.textContent = msg;
+  undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+  undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+  undoToastEl.classList.add('show');
+
+  if (undoTimeout) clearTimeout(undoTimeout);
+  undoTimeout = setTimeout(() => {
+    dismissUndoToast(false);
+  }, 2500);
+}
+
+function dismissUndoToast(immediate) {
+  if (!undoToastEl) return;
+  if (immediate) {
+    undoToastEl.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+  }
+  undoToastEl.classList.remove('show');
+  undoToastEl.style.transform = 'translateX(-50%) translateY(120px)';
+  if (undoTimeout) {
+    clearTimeout(undoTimeout);
+    undoTimeout = null;
+  }
+}
+
+function performUndo() {
+  if (!lastDeletedItem) return;
+  const { colId, catName, item, index } = lastDeletedItem;
+  state.data[colId][catName].items.splice(index, 0, item);
+  saveState(state);
+  renderCollection();
+  updateGlobalProgress();
+  lastDeletedItem = null;
+  dismissUndoToast(true);
+  showToast('✓ Elemento restaurado');
 }
 
 // ── Modal Helpers ────────────────────────────────────

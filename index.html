@@ -247,13 +247,37 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 .item-row.checked .checkmark { opacity: 1; transform: scale(1); }
 .item-label { flex: 1; font-size: 0.88rem; color: var(--clr-text-primary); transition: color var(--tx-mid), text-decoration var(--tx-mid); line-height: 1.4; }
 .item-row.checked .item-label { color: var(--clr-text-muted); text-decoration: line-through; }
-.item-edit-btn {
-  flex-shrink: 0; background: transparent; border: 1px solid transparent;
+.item-actions {
+  display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+}
+.item-edit-btn, .item-delete-btn {
+  background: transparent; border: 1px solid transparent;
   border-radius: var(--radius-sm); padding: 4px 8px; color: var(--clr-text-muted);
   font-size: 0.75rem; cursor: pointer; opacity: 0; transition: all var(--tx-fast);
 }
-.item-row:hover .item-edit-btn { opacity: 1; border-color: var(--clr-border); color: var(--clr-blue-bright); }
+.item-row:hover .item-edit-btn, .item-row:hover .item-delete-btn { opacity: 1; border-color: var(--clr-border); }
+.item-row:hover .item-edit-btn { color: var(--clr-blue-bright); }
+.item-row:hover .item-delete-btn { color: var(--clr-danger); }
 .item-edit-btn:hover { background: rgba(74,158,222,0.1) !important; border-color: var(--clr-blue-accent) !important; }
+.item-delete-btn:hover { background: rgba(192,57,43,0.15) !important; border-color: var(--clr-danger-hover) !important; }
+.undo-toast {
+  position: fixed; bottom: calc(var(--progress-h) + 16px); left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: rgba(8,15,8,0.98); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-pill); padding: 10px 24px; display: flex;
+  align-items: center; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 300; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  opacity: 0; pointer-events: none; font-family: var(--font-body); font-size: 0.88rem;
+  user-select: none; touch-action: none;
+}
+.undo-toast.show { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.undo-btn {
+  background: transparent; border: none; color: var(--clr-green-bright);
+  font-weight: 700; cursor: pointer; font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem;
+  padding: 4px 8px; border-radius: var(--radius-sm); transition: background var(--tx-fast);
+}
+.undo-btn:hover { background: rgba(76, 175, 80, 0.1); }
 .add-item-btn {
   display: flex; align-items: center; gap: 8px; width: 100%;
   padding: 14px 18px; background: transparent; border: none; min-height: 48px;
@@ -625,6 +649,9 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
   var state = loadState();
   var editTarget = null;
   var addTarget  = null;
+  var lastDeletedItem = null;
+  var undoToastEl = null;
+  var undoTimeout = null;
 
   // ── DOM REFS ─────────────────────────────────────────
   var collectionsTabsEl = document.getElementById('collections-tabs');
@@ -748,6 +775,109 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     renderTabs();
   }
 
+  // ── UNDO HANDLING ────────────────────────────────────
+  function initUndoToast() {
+    if (document.getElementById('undo-toast')) {
+      undoToastEl = document.getElementById('undo-toast');
+      return;
+    }
+    var toast = document.createElement('div');
+    toast.id = 'undo-toast';
+    toast.className = 'undo-toast';
+    toast.innerHTML = '<span id="undo-message">Elemento eliminado</span>' +
+                      '<button class="undo-btn" id="undo-action-btn">Deshacer</button>';
+    document.body.appendChild(toast);
+    undoToastEl = toast;
+    
+    document.getElementById('undo-action-btn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      performUndo();
+    });
+    
+    // Swipe down gesture detection
+    var startY = 0;
+    var currentY = 0;
+    var isDragging = false;
+    
+    function onStart(e) {
+      startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+      isDragging = true;
+      undoToastEl.style.transition = 'none';
+    }
+    
+    function onMove(e) {
+      if (!isDragging) return;
+      var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+      var diffY = y - startY;
+      if (diffY > 0) {
+        currentY = diffY;
+        undoToastEl.style.transform = 'translateX(-50%) translateY(' + currentY + 'px)';
+      }
+    }
+    
+    function onEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+      if (currentY > 40) {
+        dismissUndoToast(true);
+      } else {
+        undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+      }
+      currentY = 0;
+    }
+    
+    undoToastEl.addEventListener('touchstart', onStart);
+    undoToastEl.addEventListener('touchmove', onMove);
+    undoToastEl.addEventListener('touchend', onEnd);
+    
+    undoToastEl.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+  }
+
+  function showUndoToast(msg) {
+    initUndoToast();
+    document.getElementById('undo-message').textContent = msg;
+    undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+    undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+    undoToastEl.classList.add('show');
+    
+    if (undoTimeout) clearTimeout(undoTimeout);
+    undoTimeout = setTimeout(function() {
+      dismissUndoToast(false);
+    }, 2500);
+  }
+
+  function dismissUndoToast(immediate) {
+    if (!undoToastEl) return;
+    if (immediate) {
+      undoToastEl.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+    }
+    undoToastEl.classList.remove('show');
+    undoToastEl.style.transform = 'translateX(-50%) translateY(120px)';
+    if (undoTimeout) {
+      clearTimeout(undoTimeout);
+      undoTimeout = null;
+    }
+  }
+
+  function performUndo() {
+    if (!lastDeletedItem) return;
+    var colId = lastDeletedItem.colId;
+    var catName = lastDeletedItem.catName;
+    var item = lastDeletedItem.item;
+    var idx = lastDeletedItem.index;
+    
+    state.data[colId][catName].items.splice(idx, 0, item);
+    saveState(state);
+    renderCollection();
+    updateGlobalProgress();
+    lastDeletedItem = null;
+    dismissUndoToast(true);
+    showToast('✓ Elemento restaurado');
+  }
+
   // ── SNIPER SCOPE ────────────────────────────────────
   // Total sequence: deer(0.3s→1.8s) + gap + duck(2.3s→3.8s) + gap + dove(4.3s→6.1s) ≈ 6.5s
   var SCOPE_DURATION = 6800;
@@ -822,7 +952,10 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
         html += '<li class="item-row' + chk + '" data-col="' + colId + '" data-cat="' + escapeHtml(catName) + '" data-item-id="' + item.id + '" tabindex="0" role="checkbox" aria-checked="' + item.checked + '">' +
           '<div class="item-checkbox-wrap"><span class="checkmark">✓</span></div>' +
           '<span class="item-label">' + escapeHtml(item.name) + '</span>' +
-          '<button class="item-edit-btn" data-edit-col="' + colId + '" data-edit-cat="' + escapeHtml(catName) + '" data-edit-item="' + item.id + '" title="Editar">✎</button>' +
+          '<div class="item-actions">' +
+            '<button class="item-edit-btn" data-edit-col="' + colId + '" data-edit-cat="' + escapeHtml(catName) + '" data-edit-item="' + item.id + '" title="Editar">✎</button>' +
+            '<button class="item-delete-btn" data-delete-col="' + colId + '" data-delete-cat="' + escapeHtml(catName) + '" data-delete-item="' + item.id + '" title="Borrar">🗑</button>' +
+          '</div>' +
           '</li>';
       }
 
@@ -856,7 +989,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     var rows = collectionViewEl.querySelectorAll('.item-row');
     for (var r=0; r<rows.length; r++) {
       rows[r].addEventListener('click', function(e) {
-        if (e.target.closest('.item-edit-btn')) return;
+        if (e.target.closest('.item-edit-btn') || e.target.closest('.item-delete-btn')) return;
         var colId   = this.dataset.col;
         var catName = this.dataset.cat;
         var itemId  = this.dataset.itemId;
@@ -907,6 +1040,34 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
             modalInput.value = items[j].name;
             openModal(modalOverlay);
             modalInput.focus(); modalInput.select();
+            break;
+          }
+        }
+      });
+    }
+
+    // Delete buttons
+    var deleteBtns = collectionViewEl.querySelectorAll('.item-delete-btn');
+    for (var db=0; db<deleteBtns.length; db++) {
+      deleteBtns[db].addEventListener('click', function(e) {
+        e.stopPropagation();
+        var colId   = this.dataset.deleteCol;
+        var catName = this.dataset.deleteCat;
+        var itemId  = this.dataset.deleteItem;
+        var items   = state.data[colId][catName].items;
+        for (var j=0; j<items.length; j++) {
+          if (items[j].id === itemId) {
+            lastDeletedItem = {
+              colId: colId,
+              catName: catName,
+              item: items[j],
+              index: j
+            };
+            items.splice(j, 1);
+            saveState(state);
+            renderCollection();
+            updateGlobalProgress();
+            showUndoToast('Elemento eliminado');
             break;
           }
         }

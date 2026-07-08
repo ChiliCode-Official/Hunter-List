@@ -556,9 +556,14 @@ h1, h2, h3 {
   text-decoration: line-through;
 }
 
-/* Edit button */
-.item-edit-btn {
+/* Edit / Delete actions */
+.item-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
   flex-shrink: 0;
+}
+.item-edit-btn, .item-delete-btn {
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
@@ -569,14 +574,69 @@ h1, h2, h3 {
   opacity: 0;
   transition: all var(--tx-fast);
 }
-.item-row:hover .item-edit-btn {
+.item-row:hover .item-edit-btn, .item-row:hover .item-delete-btn {
   opacity: 1;
   border-color: var(--clr-border);
+}
+.item-row:hover .item-edit-btn {
   color: var(--clr-blue-bright);
+}
+.item-row:hover .item-delete-btn {
+  color: var(--clr-danger);
 }
 .item-edit-btn:hover {
   background: rgba(74,158,222,0.1) !important;
   border-color: var(--clr-blue-accent) !important;
+}
+.item-delete-btn:hover {
+  background: rgba(192,57,43,0.15) !important;
+  border-color: var(--clr-danger-hover) !important;
+}
+
+/* Undo Toast */
+.undo-toast {
+  position: fixed;
+  bottom: calc(var(--progress-h) + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: rgba(8,15,8,0.98);
+  border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 300;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  user-select: none;
+  touch-action: none;
+}
+.undo-toast.show {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.undo-btn {
+  background: transparent;
+  border: none;
+  color: var(--clr-green-bright);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background var(--tx-fast);
+}
+.undo-btn:hover {
+  background: rgba(76, 175, 80, 0.1);
 }
 
 /* ── ADD ITEM BUTTON (inside category) ─────────────── */
