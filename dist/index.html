@@ -1,99 +1,1201 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#5a6b1e" />
-    <meta name="description" content="Hunter List — La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-    <link rel="icon" type="image/png" href="/Hunter-List/logo.png" />
-    <link rel="apple-touch-icon" href="/Hunter-List/logo.png" />
-    <link rel="manifest" href="/Hunter-List/manifest.json" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <title>Hunter List — Héctor</title>
-    <script type="module" crossorigin src="/Hunter-List/assets/index-B0Dfx2Gv.js"></script>
-    <link rel="stylesheet" crossorigin href="/Hunter-List/assets/index-AdKDI0h6.css">
-  </head>
-  <body>
-    <div id="app">
-      <!-- Header -->
-      <header class="main-header">
-        <div class="header-inner">
-          <div class="header-logo-block">
-            <img src="https://i.imgur.com/GteuRef.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
-            <div class="header-titles">
-              <h1 class="app-title">Hunter List</h1>
-              <span class="app-owner">Héctor's Collection</span>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5a6b1e" />
+  <meta name="description" content="Hunter List — La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+  <link rel="icon" type="image/png" href="/Hunter-List/assets/logo-mD4MkIvF.png" />
+  <link rel="apple-touch-icon" href="/Hunter-List/assets/logo-mD4MkIvF.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="manifest" href="/Hunter-List/assets/manifest-BLAnl9Oe.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Hunter List" />
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Hunter List — Héctor" />
+  <meta property="og:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+  <meta property="og:image" content="https://lrodr.github.io/Hunter-List/logo.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:url" content="https://lrodr.github.io/Hunter-List/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hunter List — Héctor" />
+  <meta name="twitter:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
+  <meta name="twitter:image" content="https://lrodr.github.io/Hunter-List/logo.png" />
+
+  <title>Hunter List — Héctor</title>
+  <style>
+:root {
+  --clr-bg-base:        #080f08;
+  --clr-bg-surface:     #0e1a0e;
+  --clr-bg-card:        #111f11;
+  --clr-bg-elevated:    #162316;
+  --clr-green-deep:     #1a3a1a;
+  --clr-green-mid:      #2d5a2d;
+  --clr-green-accent:   #3d8c3d;
+  --clr-green-bright:   #4caf50;
+  --clr-green-glow:     rgba(76, 175, 80, 0.15);
+  --clr-blue-deep:      #0a1a2e;
+  --clr-blue-steel:     #1a3a5c;
+  --clr-blue-accent:    #2e6da4;
+  --clr-blue-bright:    #4a9ede;
+  --clr-blue-glow:      rgba(74, 158, 222, 0.15);
+  --clr-gold:           #c9a84c;
+  --clr-gold-dim:       #7a6030;
+  --clr-text-primary:   #e8f0e8;
+  --clr-text-secondary: #9aaa9a;
+  --clr-text-muted:     #5a6a5a;
+  --clr-text-bright:    #ffffff;
+  --clr-danger:         #c0392b;
+  --clr-danger-hover:   #e74c3c;
+  --clr-border:         rgba(61, 140, 61, 0.2);
+  --clr-border-bright:  rgba(61, 140, 61, 0.5);
+  --clr-border-blue:    rgba(46, 109, 164, 0.35);
+  --camo-gradient:
+    radial-gradient(ellipse at 10% 20%, rgba(26,58,26,0.8) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 10%, rgba(10,26,46,0.7) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 80%, rgba(13,30,13,0.9) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 70%, rgba(29,77,29,0.6) 0%, transparent 30%),
+    linear-gradient(135deg, #080f08 0%, #0d1a0d 30%, #080f0f 60%, #0a0d14 100%);
+  --radius-sm:    6px;
+  --radius-md:    12px;
+  --radius-lg:    18px;
+  --radius-xl:    24px;
+  --radius-pill:  999px;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:    0 4px 20px rgba(0,0,0,0.5);
+  --shadow-lg:    0 8px 40px rgba(0,0,0,0.6);
+  --shadow-green: 0 0 20px rgba(61, 140, 61, 0.3);
+  --shadow-blue:  0 0 20px rgba(46, 109, 164, 0.3);
+  --tx-fast:  0.15s ease;
+  --tx-mid:   0.28s ease;
+  --tx-slow:  0.45s ease;
+  --font-heading: 'Oswald', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --header-h:   82px;
+  --nav-h:      56px;
+  --progress-h: 52px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--camo-gradient);
+  background-attachment: fixed;
+  color: var(--clr-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  overscroll-behavior-y: none;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(26,58,26,0.25) 0%, transparent 25%),
+    radial-gradient(circle at 75% 15%, rgba(10,26,46,0.3) 0%, transparent 20%),
+    radial-gradient(circle at 55% 65%, rgba(20,45,20,0.2) 0%, transparent 30%),
+    radial-gradient(circle at 10% 80%, rgba(8,20,40,0.25) 0%, transparent 25%),
+    radial-gradient(circle at 90% 55%, rgba(25,55,25,0.2) 0%, transparent 22%);
+  pointer-events: none;
+  z-index: 0;
+}
+#app { position: relative; z-index: 1; min-height: 100vh; }
+h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-transform: uppercase; }
+.main-header {
+  position: sticky; top: 0; z-index: 100;
+  height: calc(var(--header-h) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  background: rgba(8,15,8,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--clr-border-bright);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 1px 0 rgba(61,140,61,0.3);
+}
+.header-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.header-logo-block { display: flex; align-items: center; gap: 18px; }
+.main-logo {
+  height: 68px; width: auto; object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(61,140,61,0.5));
+  transition: filter var(--tx-mid), transform var(--tx-mid);
+}
+.main-logo:hover { filter: drop-shadow(0 0 18px rgba(76,175,80,0.8)); transform: scale(1.04); }
+.header-titles { display: flex; flex-direction: column; }
+.app-title {
+  font-size: 2rem; font-weight: 700; color: var(--clr-text-bright);
+  line-height: 1; letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(76,175,80,0.4), 0 2px 4px rgba(0,0,0,0.8);
+}
+.app-owner {
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 400;
+  color: var(--clr-green-accent); letter-spacing: 0.22em; text-transform: uppercase; margin-top: 2px;
+}
+.header-stats { display: flex; gap: 12px; align-items: center; }
+.stat-pill {
+  background: rgba(26,58,26,0.6); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-pill); padding: 5px 14px;
+  font-size: 0.75rem; font-weight: 600; font-family: var(--font-heading);
+  color: var(--clr-green-bright); letter-spacing: 0.08em; white-space: nowrap;
+}
+.collections-nav {
+  position: sticky; top: var(--header-h); z-index: 90;
+  background: rgba(10,16,10,0.88); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--clr-border);
+  height: var(--nav-h); display: flex; align-items: center;
+}
+.collections-tabs {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; gap: 4px; align-items: center; height: 100%; width: 100%;
+  overflow-x: auto; scrollbar-width: none;
+}
+.collections-tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  position: relative; background: transparent; border: 1px solid transparent;
+  border-radius: var(--radius-sm); padding: 8px 22px;
+  font-family: var(--font-heading); font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--clr-text-secondary); cursor: pointer; transition: all var(--tx-mid);
+  white-space: nowrap; display: flex; align-items: center; gap: 8px;
+}
+.tab-btn::after {
+  content: ''; position: absolute; bottom: -1px; left: 50%;
+  transform: translateX(-50%) scaleX(0); width: 80%; height: 2px;
+  background: var(--clr-green-bright); border-radius: 2px; transition: transform var(--tx-mid);
+}
+.tab-btn:hover { color: var(--clr-text-primary); background: rgba(61,140,61,0.08); border-color: var(--clr-border); }
+.tab-btn.active { color: var(--clr-green-bright); background: rgba(61,140,61,0.12); border-color: var(--clr-border-bright); text-shadow: 0 0 12px rgba(76,175,80,0.4); }
+.tab-btn.active::after { transform: translateX(-50%) scaleX(1); }
+.tab-badge {
+  background: var(--clr-green-deep); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-pill); padding: 1px 7px; font-size: 0.65rem;
+  font-weight: 600; color: var(--clr-green-bright); font-family: var(--font-body);
+  min-width: 22px; text-align: center;
+}
+.main-content { max-width: 1200px; margin: 0 auto; padding: 28px 24px calc(var(--progress-h) + 28px); }
+.collection-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--clr-border);
+}
+.collection-title-block { display: flex; align-items: center; gap: 14px; }
+.collection-icon { font-size: 2.2rem; line-height: 1; filter: drop-shadow(0 0 8px rgba(76,175,80,0.5)); }
+.collection-title { font-size: 1.8rem; font-weight: 700; color: var(--clr-text-bright); text-shadow: 0 0 20px rgba(76,175,80,0.3); }
+.collection-subtitle { font-size: 0.72rem; color: var(--clr-text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 2px; }
+.btn-reset-collection {
+  background: rgba(192,57,43,0.12); border: 1px solid rgba(192,57,43,0.35);
+  border-radius: var(--radius-sm); padding: 8px 16px;
+  font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 0.1em;
+  color: var(--clr-danger); cursor: pointer; transition: all var(--tx-fast);
+}
+.btn-reset-collection:hover { background: rgba(192,57,43,0.25); border-color: var(--clr-danger); color: var(--clr-danger-hover); }
+.categories-grid { columns: 1; column-gap: 20px; }
+@media (min-width: 740px) { .categories-grid { columns: 2; } }
+@media (min-width: 1100px) { .categories-grid { columns: 3; } }
+.category-card {
+  break-inside: avoid; margin-bottom: 20px;
+  background: rgba(14, 26, 14, 0.75); border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  transition: border-color var(--tx-mid), box-shadow var(--tx-mid), transform var(--tx-mid);
+  animation: cardIn var(--tx-slow) ease both;
+}
+@keyframes cardIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+.category-card:hover { border-color: var(--clr-border-bright); box-shadow: var(--shadow-green); transform: translateY(-2px); }
+.category-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px; background: rgba(26,58,26,0.45);
+  border-bottom: 1px solid var(--clr-border); cursor: pointer; user-select: none;
+  transition: background var(--tx-fast);
+}
+.category-card-header:hover { background: rgba(26,58,26,0.65); }
+.category-name-block { display: flex; align-items: center; gap: 10px; }
+.category-icon { font-size: 1.3rem; line-height: 1; }
+.category-name { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; letter-spacing: 0.12em; color: var(--clr-text-bright); text-transform: uppercase; }
+.category-count { font-size: 0.7rem; color: var(--clr-green-accent); font-family: var(--font-body); font-weight: 500; letter-spacing: 0.05em; }
+.category-header-right { display: flex; align-items: center; gap: 10px; }
+.category-progress-ring { position: relative; width: 36px; height: 36px; flex-shrink: 0; }
+.category-progress-ring svg { transform: rotate(-90deg); }
+.ring-bg  { fill: none; stroke: rgba(61,140,61,0.15); stroke-width: 3; }
+.ring-fill { fill: none; stroke: var(--clr-green-bright); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+.ring-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: var(--clr-green-bright); font-family: var(--font-heading); }
+.category-chevron { color: var(--clr-text-muted); font-size: 0.9rem; transition: transform var(--tx-mid); }
+.category-card.collapsed .category-chevron { transform: rotate(-90deg); }
+.category-card.collapsed .category-items-list { display: none; }
+.category-card.collapsed .add-item-btn { display: none; }
+.category-items-list { list-style: none; padding: 8px 0; }
+.item-row {
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; min-height: 48px;
+  border-bottom: 1px solid rgba(61,140,61,0.06);
+  transition: background var(--tx-fast), opacity var(--tx-mid); cursor: pointer;
+}
+.item-row:last-child { border-bottom: none; }
+.item-row:hover { background: rgba(61,140,61,0.06); }
+.item-checkbox-wrap {
+  flex-shrink: 0; width: 22px; height: 22px;
+  border: 2px solid var(--clr-green-mid); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--tx-fast); background: rgba(26,58,26,0.3);
+}
+.item-row.checked .item-checkbox-wrap { background: var(--clr-green-accent); border-color: var(--clr-green-bright); box-shadow: 0 0 8px rgba(76,175,80,0.4); }
+.item-checkbox-wrap .checkmark { color: #fff; font-size: 0.75rem; font-weight: 700; opacity: 0; transform: scale(0.5); transition: all var(--tx-fast); }
+.item-row.checked .checkmark { opacity: 1; transform: scale(1); }
+.item-label { flex: 1; font-size: 0.88rem; color: var(--clr-text-primary); transition: color var(--tx-mid), text-decoration var(--tx-mid); line-height: 1.4; }
+.item-row.checked .item-label { color: var(--clr-text-muted); text-decoration: line-through; }
+.item-actions {
+  display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+}
+.item-edit-btn, .item-delete-btn {
+  background: transparent; border: 1px solid transparent;
+  border-radius: var(--radius-sm); padding: 4px 8px; color: var(--clr-text-muted);
+  font-size: 0.75rem; cursor: pointer; opacity: 0; transition: all var(--tx-fast);
+}
+.item-row:hover .item-edit-btn, .item-row:hover .item-delete-btn { opacity: 1; border-color: var(--clr-border); }
+.item-row:hover .item-edit-btn { color: var(--clr-blue-bright); }
+.item-row:hover .item-delete-btn { color: var(--clr-danger); }
+.item-edit-btn:hover { background: rgba(74,158,222,0.1) !important; border-color: var(--clr-blue-accent) !important; }
+.item-delete-btn:hover { background: rgba(192,57,43,0.15) !important; border-color: var(--clr-danger-hover) !important; }
+.undo-toast {
+  position: fixed; bottom: calc(var(--progress-h) + 16px); left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: rgba(8,15,8,0.98); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-pill); padding: 10px 24px; display: flex;
+  align-items: center; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 300; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  opacity: 0; pointer-events: none; font-family: var(--font-body); font-size: 0.88rem;
+  user-select: none; touch-action: none;
+}
+.undo-toast.show { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+.undo-btn {
+  background: transparent; border: none; color: var(--clr-green-bright);
+  font-weight: 700; cursor: pointer; font-family: var(--font-heading);
+  text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem;
+  padding: 4px 8px; border-radius: var(--radius-sm); transition: background var(--tx-fast);
+}
+.undo-btn:hover { background: rgba(76, 175, 80, 0.1); }
+.add-item-btn {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 14px 18px; background: transparent; border: none; min-height: 48px;
+  border-top: 1px dashed rgba(61,140,61,0.18); color: var(--clr-text-muted);
+  font-size: 0.9rem; font-family: var(--font-body); cursor: pointer; transition: all var(--tx-fast);
+}
+.add-item-btn:hover { color: var(--clr-green-bright); background: rgba(61,140,61,0.05); }
+.add-item-btn .plus-icon {
+  width: 18px; height: 18px; border: 1px dashed currentColor; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1rem; line-height: 1; transition: border-color var(--tx-fast);
+}
+.progress-bar-container {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  height: calc(var(--progress-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(8,15,8,0.95);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--clr-border-bright); display: flex; align-items: center;
+}
+@keyframes pulseSuccess { 0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); } 70% { box-shadow: 0 0 0 24px rgba(76, 175, 80, 0); } 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); } }
+.progress-bar-container.complete { animation: pulseSuccess 1s ease-out; border-top-color: var(--clr-green-bright); background: rgba(14,26,14,0.95); }
+.collection-actions { display: flex; gap: 12px; margin-top: 8px; align-items: center; }
+.btn-text { background: transparent; border: none; color: var(--clr-text-secondary); font-family: var(--font-body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: color var(--tx-fast); padding: 4px 0; }
+.btn-text:hover { color: var(--clr-text-primary); text-decoration: underline; }
+/* Category complete glow */
+@keyframes catCompleteGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(76,175,80,0.7), var(--shadow-green); border-color: var(--clr-green-bright); }
+  40%  { box-shadow: 0 0 25px 8px rgba(76,175,80,0.4), var(--shadow-green); }
+  100% { box-shadow: var(--shadow-green); border-color: var(--clr-green-bright); }
+}
+.category-card.cat-complete { animation: catCompleteGlow 1.2s ease-out forwards; border-color: var(--clr-green-bright); }
+.category-card.cat-complete .category-card-header { background: rgba(45,90,45,0.55); }
+/* Sniper scope overlay */
+.sniper-overlay {
+  position: fixed; inset: 0; z-index: 500; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.5s ease;
+}
+.sniper-overlay.active { opacity: 1; pointer-events: all; }
+.sniper-overlay-bg {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.82);
+  animation: overlayFadeIn 0.5s ease forwards;
+}
+@keyframes overlayFadeIn { from { background: rgba(0,0,0,0); } to { background: rgba(0,0,0,0.82); } }
+.sniper-scope {
+  position: relative; width: 340px; height: 340px; z-index: 1;
+}
+@media (max-width: 640px) { .sniper-scope { width: 270px; height: 270px; } }
+.scope-ring {
+  position: absolute; inset: 0; border: 3px solid rgba(76,175,80,0.85);
+  border-radius: 50%; box-shadow: 0 0 40px rgba(76,175,80,0.3), inset 0 0 80px rgba(0,0,0,0.6);
+  overflow: hidden; animation: scopeZoomIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes scopeZoomIn { from { transform: scale(2.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* Crosshairs drawn on top of the ring's overflow:hidden circle */
+.scope-crosshair-h { position: absolute; width: 100%; height: 1px; top: 50%; left: 0; background: rgba(76,175,80,0.55); pointer-events: none; z-index: 3; }
+.scope-crosshair-v { position: absolute; height: 100%; width: 1px; left: 50%; top: 0; background: rgba(76,175,80,0.55); pointer-events: none; z-index: 3; }
+.scope-dot { position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; background: #f33; border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 10px rgba(255,30,30,0.9); z-index: 4; }
+.scope-tick { position: absolute; background: rgba(76,175,80,0.55); z-index: 3; }
+.scope-tick.h { height: 1px; width: 14px; top: 50%; }
+.scope-tick.v { width: 1px; height: 14px; left: 50%; }
+.scope-tick.h.t1 { left: 22%; } .scope-tick.h.t2 { left: 35%; } .scope-tick.h.t3 { right: 22%; } .scope-tick.h.t4 { right: 35%; }
+.scope-tick.v.t1 { top: 22%; } .scope-tick.v.t2 { top: 35%; } .scope-tick.v.t3 { bottom: 22%; } .scope-tick.v.t4 { bottom: 35%; }
+/* Animals walk through the scope */
+.scope-animal {
+  position: absolute; top: 50%; font-size: 3.2rem; line-height: 1;
+  transform: translateY(-50%); white-space: nowrap; z-index: 2;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+}
+@keyframes walkAcross  { 0% { left:-20%; opacity:0; } 5% { opacity:1; } 95% { opacity:1; } 100% { left:110%; opacity:0; } }
+@keyframes flyAcrossUp { 0% { left:-20%; top:50%; opacity:0; } 5% { opacity:1; } 60% { top:30%; } 95% { opacity:1; } 100% { left:110%; top:5%; opacity:0; } }
+.scope-animal.deer  { animation: walkAcross  1.8s 0.3s ease-in-out both; }
+.scope-animal.duck  { animation: walkAcross  1.8s 2.3s ease-in-out both; font-size: 2.6rem; }
+.scope-animal.dove  { animation: flyAcrossUp 1.8s 4.3s ease-in-out both; font-size: 2.4rem; }
+.scope-text {
+  position: absolute; bottom: -52px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-heading); font-size: 1.25rem; letter-spacing: 0.18em;
+  color: var(--clr-green-bright); text-transform: uppercase; white-space: nowrap;
+  text-shadow: 0 0 20px rgba(76,175,80,0.7);
+  animation: textPop 0.5s 0.5s ease both;
+}
+@keyframes textPop { from { opacity:0; transform: translateX(-50%) translateY(10px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+.progress-bar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; gap: 14px; }
+.progress-label { font-family: var(--font-heading); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--clr-text-secondary); white-space: nowrap; min-width: 80px; }
+.progress-track { flex: 1; height: 8px; background: rgba(61,140,61,0.1); border-radius: var(--radius-pill); overflow: hidden; border: 1px solid rgba(61,140,61,0.15); }
+.progress-fill {
+  height: 100%; border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--clr-green-mid), var(--clr-green-bright), var(--clr-blue-accent));
+  background-size: 200% 100%; animation: shimmer 2.5s linear infinite;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px rgba(76,175,80,0.5);
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.progress-pct { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; color: var(--clr-green-bright); letter-spacing: 0.06em; min-width: 42px; text-align: right; text-shadow: 0 0 8px rgba(76,175,80,0.5); }
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  opacity: 0; pointer-events: none; transition: opacity var(--tx-mid);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--clr-bg-elevated); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-xl); box-shadow: var(--shadow-lg), var(--shadow-green);
+  width: 100%; max-width: 440px;
+  transform: scale(0.92) translateY(20px); transition: transform var(--tx-mid); overflow: hidden;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--clr-border); background: rgba(26,58,26,0.3); }
+.modal-title { font-size: 1rem; font-weight: 600; color: var(--clr-text-bright); letter-spacing: 0.1em; }
+.modal-close { background: transparent; border: 1px solid var(--clr-border); border-radius: var(--radius-sm); padding: 4px 10px; color: var(--clr-text-muted); font-size: 0.9rem; cursor: pointer; transition: all var(--tx-fast); }
+.modal-close:hover { border-color: var(--clr-danger); color: var(--clr-danger-hover); }
+.modal-body { padding: 22px; }
+.modal-label { display: block; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--clr-text-muted); text-transform: uppercase; margin-bottom: 8px; }
+.modal-input { width: 100%; background: rgba(8,15,8,0.8); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 12px 16px; font-family: var(--font-body); font-size: 16px; color: var(--clr-text-primary); outline: none; transition: border-color var(--tx-fast), box-shadow var(--tx-fast); }
+.modal-input:focus { border-color: var(--clr-green-accent); box-shadow: 0 0 0 3px rgba(61,140,61,0.15); }
+.modal-input::placeholder { color: var(--clr-text-muted); }
+.modal-footer { display: flex; gap: 10px; justify-content: flex-end; padding: 14px 22px 18px; border-top: 1px solid var(--clr-border); }
+.btn { padding: 9px 20px; border-radius: var(--radius-sm); font-family: var(--font-heading); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all var(--tx-fast); border: 1px solid transparent; }
+.btn-primary { background: linear-gradient(135deg, var(--clr-green-mid), var(--clr-green-accent)); color: #fff; border-color: var(--clr-green-accent); }
+.btn-primary:hover { background: linear-gradient(135deg, var(--clr-green-accent), var(--clr-green-bright)); box-shadow: 0 0 16px rgba(76,175,80,0.4); transform: translateY(-1px); }
+.btn-secondary { background: transparent; color: var(--clr-text-secondary); border-color: var(--clr-border); }
+.btn-secondary:hover { border-color: var(--clr-text-secondary); color: var(--clr-text-primary); }
+.btn-danger { background: transparent; color: var(--clr-danger); border-color: rgba(192,57,43,0.35); }
+.btn-danger:hover { background: rgba(192,57,43,0.15); border-color: var(--clr-danger); color: var(--clr-danger-hover); }
+.empty-state { text-align: center; padding: 60px 24px; color: var(--clr-text-muted); }
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state p { font-size: 0.9rem; letter-spacing: 0.05em; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-bg-base); }
+::-webkit-scrollbar-thumb { background: var(--clr-green-deep); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-green-mid); }
+@media (max-width: 640px) {
+  :root { --header-h: 68px; --nav-h: 48px; }
+  .main-logo { height: 52px; }
+  .app-title  { font-size: 1.4rem; }
+  .app-owner  { display: none; }
+  .categories-grid { columns: 1; }
+  .main-content { padding: 16px 14px calc(var(--progress-h) + 20px); }
+  .header-inner { padding: 0 14px; }
+  .collections-tabs { padding: 0 14px; }
+  .progress-bar-inner { padding: 0 14px; }
+  .modal { max-width: 100%; border-radius: var(--radius-lg); }
+}
+@media (max-width: 380px) { .app-title { font-size: 1.2rem; } .header-stats { display: none; } }
+.toast {
+  position: fixed; bottom: calc(var(--progress-h) + 16px); left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(26,58,26,0.95); border: 1px solid var(--clr-border-bright);
+  border-radius: var(--radius-md); padding: 10px 22px; font-size: 0.82rem;
+  color: var(--clr-green-bright); font-family: var(--font-heading); letter-spacing: 0.1em;
+  z-index: 300; opacity: 0; pointer-events: none; transition: all var(--tx-mid);
+  white-space: nowrap; box-shadow: var(--shadow-green);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header class="main-header">
+      <div class="header-inner">
+        <div class="header-logo-block">
+          <img src="https://i.imgur.com/GteuRef.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
+          <div class="header-titles">
+            <h1 class="app-title">Hunter List</h1>
+            <span class="app-owner">Héctor's Collection</span>
           </div>
-          <div class="header-stats" id="header-stats"></div>
         </div>
-      </header>
+        <div class="header-stats" id="header-stats"></div>
+      </div>
+    </header>
 
-      <!-- Collections Tabs -->
-      <nav class="collections-nav" id="collections-nav">
-        <div class="collections-tabs" id="collections-tabs"></div>
-      </nav>
+    <nav class="collections-nav" id="collections-nav">
+      <div class="collections-tabs" id="collections-tabs"></div>
+    </nav>
 
-      <!-- Main Content -->
-      <main class="main-content" id="main-content">
-        <div class="collection-view" id="collection-view"></div>
-      </main>
+    <main class="main-content" id="main-content">
+      <div class="collection-view" id="collection-view"></div>
+    </main>
 
-      <!-- Progress Bar (fixed bottom) -->
-      <div class="progress-bar-container" id="progress-bar-container">
-        <div class="progress-bar-inner">
-          <span class="progress-label" id="progress-label">0 / 0 Items</span>
-          <div class="progress-track">
-            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-          </div>
-          <span class="progress-pct" id="progress-pct">0%</span>
+    <div class="progress-bar-container" id="progress-bar-container">
+      <div class="progress-bar-inner">
+        <span class="progress-label" id="progress-label">0 / 0 Items</span>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
         </div>
+        <span class="progress-pct" id="progress-pct">0%</span>
       </div>
     </div>
+  </div>
 
-    <!-- Modal: Edit / Add Item -->
-    <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="modal-header">
-          <h2 class="modal-title" id="modal-title">Editar Elemento</h2>
-          <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="modal-input" id="modal-input" placeholder="Nombre del elemento..." maxlength="80" />
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" id="modal-delete" title="Eliminar">🗑 Eliminar</button>
-          <button class="btn btn-primary" id="modal-save">💾 Guardar</button>
-        </div>
+  <!-- Modal: Edit Item -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Editar Elemento</h2>
+        <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="modal-input" id="modal-input" placeholder="Nombre del elemento..." maxlength="80" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="modal-delete" title="Eliminar">🗑 Eliminar</button>
+        <button class="btn btn-primary" id="modal-save">💾 Guardar</button>
       </div>
     </div>
+  </div>
 
-    <!-- Modal: Add New Item -->
-    <div class="modal-overlay" id="add-modal-overlay" aria-hidden="true">
-      <div class="modal" role="dialog" aria-modal="true">
-        <div class="modal-header">
-          <h2 class="modal-title">Nuevo Elemento</h2>
-          <button class="modal-close" id="add-modal-close" aria-label="Cerrar">✕</button>
-        </div>
-        <div class="modal-body">
-          <label class="modal-label" for="add-modal-input">Nombre del elemento</label>
-          <input type="text" class="modal-input" id="add-modal-input" placeholder="Ej: Cuchillo de caza..." maxlength="80" />
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" id="add-modal-cancel">Cancelar</button>
-          <button class="btn btn-primary" id="add-modal-save">➕ Añadir</button>
-        </div>
+  <!-- Modal: Add New Item -->
+  <div class="modal-overlay" id="add-modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2 class="modal-title">Nuevo Elemento</h2>
+        <button class="modal-close" id="add-modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="modal-label" for="add-modal-input">Nombre del elemento</label>
+        <input type="text" class="modal-input" id="add-modal-input" placeholder="Ej: Cuchillo de caza..." maxlength="80" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="add-modal-cancel">Cancelar</button>
+        <button class="btn btn-primary" id="add-modal-save">➕ Añadir</button>
       </div>
     </div>
+  </div>
 
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/Hunter-List/sw.js').catch(() => {});
-        });
+  <!-- Sniper Scope Overlay (animal parade) -->
+  <div class="sniper-overlay" id="sniper-overlay">
+    <div class="sniper-overlay-bg"></div>
+    <div class="sniper-scope">
+      <!-- Ring clips animals inside the circle -->
+      <div class="scope-ring">
+        <div class="scope-animal deer">🦌</div>
+        <div class="scope-animal duck">🦆</div>
+        <div class="scope-animal dove">🐦</div>
+      </div>
+      <!-- Crosshairs & ticks sit outside ring so they're always visible -->
+      <div class="scope-crosshair-h"></div>
+      <div class="scope-crosshair-v"></div>
+      <div class="scope-tick h t1"></div>
+      <div class="scope-tick h t2"></div>
+      <div class="scope-tick h t3"></div>
+      <div class="scope-tick h t4"></div>
+      <div class="scope-tick v t1"></div>
+      <div class="scope-tick v t2"></div>
+      <div class="scope-tick v t3"></div>
+      <div class="scope-tick v t4"></div>
+      <div class="scope-dot"></div>
+      <div class="scope-text">¡Lista Completa!</div>
+    </div>
+  </div>
+
+  <script>
+  // ── DATA ────────────────────────────────────────────
+  var DEFAULT_ITEMS = {
+    "Artículos de Tocador": {
+      icon: "🪥",
+      items: [
+        "Bálsamo Labios","Bloqueador","Cepillo Dientes","Crema Cabello",
+        "Crema Cara","Crema Cuerpo","Crema Ojos","Desodorante","Esponja",
+        "Espuma Afeitar","Hilo Dental","Jabón de Tocador","Loción",
+        "Pasta Dientes","Rastrillo","Shampoo","Toallitas Cara"
+      ]
+    },
+    "Gadgets": {
+      icon: "⚡",
+      items: [
+        "Audífonos","Baterías","Bocina","Cámara Fotográfica","Cámara Video",
+        "Cargador Celular","Cargador iPad","Cargador iPod","Celulares",
+        "Convertidores de Energía","iPad","iPod","Lámpara","Pilas"
+      ]
+    },
+    "Documentos": {
+      icon: "📋",
+      items: [
+        "Boleto Avión","Contrato Cacería","Efectivo","Licencia",
+        "Pasaporte","Permisos","Tarjeta de Crédito","Visa"
+      ]
+    },
+    "Equipaje": {
+      icon: "🎒",
+      items: ["Back Pack"]
+    },
+    "Equipo de Caza": {
+      icon: "🎯",
+      items: ["Arco","Binoculares","Flecha","Rifle","Tapones","Tiros","Lentes"]
+    },
+    "Ropa": {
+      icon: "🧥",
+      items: [
+        "Botas Caminar","Botas Nieve","Boxers","Bufanda","Calcetines",
+        "Calcetines Delgados","Calcetines Gruesos","Chamarra Aire","Chamarra Frío",
+        "Chamarra Nieve","Cinturón","Gorra","Gorro Frío","Guantes Aire",
+        "Guantes Frío","Pantalones Gruesos","Pantalones Ligeros","Pijama",
+        "Playera Manga Corta","Playera Manga Larga","Playeras","Rompe Vientos",
+        "Ropa Nieve","Ropa Térmica Gruesa","Ropa Térmica Ligera","Sudaderas","Warmers"
+      ]
+    },
+    "Medicinas": {
+      icon: "💊",
+      items: [
+        "Antibióticos","Neosporín / Antiséptico","Avapena / Antihistamínico",
+        "Curitas / Heridas","Supradol / Dolor","Motrin Normal / Dolor y Fiebre",
+        "Motrin PM / Dolor y Fiebre","Tempra / Dolor y Fiebre",
+        "Gex Gel / Estómago","Omeprazol / Estómago","Omuro / Estómago",
+        "Pemix / Estómago","Pepto Bismol / Estómago","Sal de Uvas / Estómago",
+        "Treda / Estómago","Pastillas Fuegos","Pomada Fuegos",
+        "Pastillas Garganta","Pomada Hemorroides","Dolor Muscular"
+      ]
+    },
+    "Varios": {
+      icon: "🔥",
+      items: ["Encendedor","Puros"]
+    }
+  };
+
+  var DEFAULT_COLLECTIONS = [
+    { id: "patos",   name: "Patos",   icon: "🦆", subtitle: "Cacería de Patos", color: "blue" },
+    { id: "palomas", name: "Palomas", icon: "🐦", subtitle: "Cacería de Palomas", color: "blue" },
+    { id: "venados", name: "Venados", icon: "🦌", subtitle: "Cacería de Venados", color: "green" },
+    { id: "montana", name: "Montaña", icon: "🏔️", subtitle: "Cacería de Montaña", color: "green" },
+    { id: "africa",  name: "África",  icon: "🐘", subtitle: "Safari en África", color: "gold" }
+  ];
+
+  var STORAGE_KEY = "hunterlist_v3";
+
+  function buildDefaultState() {
+    var data = {};
+    for (var ci = 0; ci < DEFAULT_COLLECTIONS.length; ci++) {
+      var col = DEFAULT_COLLECTIONS[ci];
+      data[col.id] = {};
+      var cats = Object.keys(DEFAULT_ITEMS);
+      for (var ki = 0; ki < cats.length; ki++) {
+        var catName = cats[ki];
+        var catData = DEFAULT_ITEMS[catName];
+        data[col.id][catName] = {
+          icon: catData.icon,
+          collapsed: true,
+          items: catData.items.map(function(name, idx) {
+            return { id: col.id + "-" + catName + "-" + idx, name: name, checked: false };
+          })
+        };
       }
-    </script>
-  </body>
+    }
+    return { collections: DEFAULT_COLLECTIONS, data: data, activeCollection: DEFAULT_COLLECTIONS[0].id };
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" &&
+            Array.isArray(parsed.collections) && parsed.collections.length > 0 &&
+            typeof parsed.data === "object" && parsed.data !== null &&
+            typeof parsed.activeCollection === "string") {
+          return parsed;
+        }
+      }
+    } catch(e) {}
+    return buildDefaultState();
+  }
+
+  function saveState(st) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(st)); } catch(e) {}
+  }
+
+  // ── APP STATE ────────────────────────────────────────
+  var state = loadState();
+  var editTarget = null;
+  var addTarget  = null;
+  var lastDeletedItem = null;
+  var undoToastEl = null;
+  var undoTimeout = null;
+
+  // ── DOM REFS ─────────────────────────────────────────
+  var collectionsTabsEl = document.getElementById('collections-tabs');
+  var collectionViewEl  = document.getElementById('collection-view');
+  var headerStatsEl     = document.getElementById('header-stats');
+  var progressFillEl    = document.getElementById('progress-fill');
+  var progressLabelEl   = document.getElementById('progress-label');
+  var progressPctEl     = document.getElementById('progress-pct');
+  var modalOverlay      = document.getElementById('modal-overlay');
+  var modalInput        = document.getElementById('modal-input');
+  var modalSave         = document.getElementById('modal-save');
+  var modalDelete       = document.getElementById('modal-delete');
+  var modalClose        = document.getElementById('modal-close');
+  var addModalOverlay   = document.getElementById('add-modal-overlay');
+  var addModalInput     = document.getElementById('add-modal-input');
+  var addModalSave      = document.getElementById('add-modal-save');
+  var addModalCancel    = document.getElementById('add-modal-cancel');
+  var addModalClose     = document.getElementById('add-modal-close');
+
+  // ── HELPERS ──────────────────────────────────────────
+  function genId() { return Math.random().toString(36).slice(2,9) + Date.now().toString(36); }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showToast(msg) {
+    var toast = document.querySelector('.toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function() { toast.classList.remove('show'); }, 2200);
+  }
+
+  function openModal(overlay)  { overlay.classList.add('open');    overlay.setAttribute('aria-hidden','false'); }
+  function closeModal(overlay) { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); }
+
+  // ── STATS ────────────────────────────────────────────
+  function getCollectionStats(collId) {
+    var colData = state.data[collId];
+    if (!colData) return { total:0, checked:0 };
+    var total=0, checked=0;
+    var cats = Object.values(colData);
+    for (var i=0; i<cats.length; i++)
+      for (var j=0; j<cats[i].items.length; j++) {
+        total++;
+        if (cats[i].items[j].checked) checked++;
+      }
+    return { total:total, checked:checked };
+  }
+
+  function getCategoryStats(colId, catName) {
+    var cat = state.data[colId] && state.data[colId][catName];
+    if (!cat) return { total:0, checked:0 };
+    var checked = cat.items.filter(function(i){ return i.checked; }).length;
+    return { total: cat.items.length, checked: checked };
+  }
+
+  function buildRingSVG(checked, total) {
+    var pct = total > 0 ? checked / total : 0;
+    var r = 14, circ = 2 * Math.PI * r, offset = circ * (1 - pct);
+    return '<svg width="36" height="36" viewBox="0 0 36 36">' +
+      '<circle class="ring-bg"   cx="18" cy="18" r="' + r + '" />' +
+      '<circle class="ring-fill" cx="18" cy="18" r="' + r + '" stroke-dasharray="' + circ + '" stroke-dashoffset="' + offset + '" />' +
+      '</svg><div class="ring-text">' + Math.round(pct*100) + '%</div>';
+  }
+
+  // ── RENDER TABS ──────────────────────────────────────
+  function renderTabs() {
+    collectionsTabsEl.innerHTML = '';
+    for (var i=0; i<state.collections.length; i++) {
+      var col = state.collections[i];
+      var stats = getCollectionStats(col.id);
+      var btn = document.createElement('button');
+      btn.className = 'tab-btn' + (col.id === state.activeCollection ? ' active' : '');
+      btn.dataset.colId = col.id;
+      btn.innerHTML = '<span>' + col.icon + '</span><span>' + escapeHtml(col.name) + '</span>' +
+        '<span class="tab-badge">' + stats.checked + '/' + stats.total + '</span>';
+      btn.addEventListener('click', (function(id){ return function() {
+        state.activeCollection = id;
+        saveState(state);
+        renderTabs();
+        renderCollection();
+        updateGlobalProgress();
+      }; })(col.id));
+      collectionsTabsEl.appendChild(btn);
+    }
+  }
+
+  // ── RENDER HEADER STATS ───────────────────────────────
+  function renderHeaderStats() {
+    var s = getCollectionStats(state.activeCollection);
+    headerStatsEl.innerHTML = '<div class="stat-pill">🎯 ' + s.checked + ' / ' + s.total + ' Listo</div>';
+  }
+
+  // ── UPDATE PROGRESS ───────────────────────────────────
+  var _wasComplete = false;
+  function updateGlobalProgress() {
+    var s = getCollectionStats(state.activeCollection);
+    var pct = s.total > 0 ? Math.round((s.checked/s.total)*100) : 0;
+    progressFillEl.style.width = pct + '%';
+    progressLabelEl.textContent = s.checked + ' / ' + s.total + ' Items';
+    progressPctEl.textContent   = pct + '%';
+    
+    // Show sniper scope when full collection reaches 100%
+    if (pct === 100 && s.total > 0 && !_wasComplete) {
+      _wasComplete = true;
+      showSniperScope();
+    } else if (pct < 100) {
+      _wasComplete = false;
+    }
+    
+    renderHeaderStats();
+    renderTabs();
+  }
+
+  // ── UNDO HANDLING ────────────────────────────────────
+  function initUndoToast() {
+    if (document.getElementById('undo-toast')) {
+      undoToastEl = document.getElementById('undo-toast');
+      return;
+    }
+    var toast = document.createElement('div');
+    toast.id = 'undo-toast';
+    toast.className = 'undo-toast';
+    toast.innerHTML = '<span id="undo-message">Elemento eliminado</span>' +
+                      '<button class="undo-btn" id="undo-action-btn">Deshacer</button>';
+    document.body.appendChild(toast);
+    undoToastEl = toast;
+    
+    document.getElementById('undo-action-btn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      performUndo();
+    });
+    
+    // Swipe down gesture detection
+    var startY = 0;
+    var currentY = 0;
+    var isDragging = false;
+    
+    function onStart(e) {
+      startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+      isDragging = true;
+      undoToastEl.style.transition = 'none';
+    }
+    
+    function onMove(e) {
+      if (!isDragging) return;
+      var y = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+      var diffY = y - startY;
+      if (diffY > 0) {
+        currentY = diffY;
+        undoToastEl.style.transform = 'translateX(-50%) translateY(' + currentY + 'px)';
+      }
+    }
+    
+    function onEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+      if (currentY > 40) {
+        dismissUndoToast(true);
+      } else {
+        undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+      }
+      currentY = 0;
+    }
+    
+    undoToastEl.addEventListener('touchstart', onStart);
+    undoToastEl.addEventListener('touchmove', onMove);
+    undoToastEl.addEventListener('touchend', onEnd);
+    
+    undoToastEl.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+  }
+
+  function showUndoToast(msg) {
+    initUndoToast();
+    document.getElementById('undo-message').textContent = msg;
+    undoToastEl.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease';
+    undoToastEl.style.transform = 'translateX(-50%) translateY(0)';
+    undoToastEl.classList.add('show');
+    
+    if (undoTimeout) clearTimeout(undoTimeout);
+    undoTimeout = setTimeout(function() {
+      dismissUndoToast(false);
+    }, 2500);
+  }
+
+  function dismissUndoToast(immediate) {
+    if (!undoToastEl) return;
+    if (immediate) {
+      undoToastEl.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+    }
+    undoToastEl.classList.remove('show');
+    undoToastEl.style.transform = 'translateX(-50%) translateY(120px)';
+    if (undoTimeout) {
+      clearTimeout(undoTimeout);
+      undoTimeout = null;
+    }
+  }
+
+  function performUndo() {
+    if (!lastDeletedItem) return;
+    var colId = lastDeletedItem.colId;
+    var catName = lastDeletedItem.catName;
+    var item = lastDeletedItem.item;
+    var idx = lastDeletedItem.index;
+    
+    state.data[colId][catName].items.splice(idx, 0, item);
+    saveState(state);
+    renderCollection();
+    updateGlobalProgress();
+    lastDeletedItem = null;
+    dismissUndoToast(true);
+    showToast('✓ Elemento restaurado');
+  }
+
+  // ── SNIPER SCOPE ────────────────────────────────────
+  // Total sequence: deer(0.3s→1.8s) + gap + duck(2.3s→3.8s) + gap + dove(4.3s→6.1s) ≈ 6.5s
+  var SCOPE_DURATION = 6800;
+  function showSniperScope() {
+    var overlay = document.getElementById('sniper-overlay');
+    if (!overlay) return;
+    // Re-clone the scope to restart CSS animations
+    var old = overlay.querySelector('.sniper-scope');
+    var fresh = old.cloneNode(true);
+    old.parentNode.replaceChild(fresh, old);
+    overlay.classList.add('active');
+    var closeTimer = setTimeout(function() {
+      overlay.classList.remove('active');
+    }, SCOPE_DURATION);
+    function dismiss() {
+      clearTimeout(closeTimer);
+      overlay.classList.remove('active');
+      overlay.removeEventListener('click', dismiss);
+    }
+    overlay.addEventListener('click', dismiss);
+  }
+
+  // ── RENDER COLLECTION ────────────────────────────────
+  function renderCollection() {
+    var colId  = state.activeCollection;
+    var colCfg = null;
+    for (var ci=0; ci<state.collections.length; ci++)
+      if (state.collections[ci].id === colId) { colCfg = state.collections[ci]; break; }
+    var colData = state.data[colId];
+
+    if (!colData || !colCfg) {
+      collectionViewEl.innerHTML = '<div class="empty-state"><div class="empty-icon">🎯</div><p>No hay colección activa.</p></div>';
+      return;
+    }
+
+    var s = getCollectionStats(colId);
+    var html = '<div class="collection-header">' +
+      '<div class="collection-title-block">' +
+      '<span class="collection-icon">' + colCfg.icon + '</span>' +
+      '<div><div class="collection-title">' + escapeHtml(colCfg.name) + '</div>' +
+      '<div class="collection-subtitle">' + escapeHtml(colCfg.subtitle) + ' · ' + s.checked + ' de ' + s.total + ' listos</div>' +
+      '<div class="collection-actions">' +
+      '<button class="btn-text" id="btn-expand-all">Abrir todo</button> <span style="color:var(--clr-text-muted);font-size:0.7rem">•</span> <button class="btn-text" id="btn-collapse-all">Cerrar todo</button>' +
+      '</div></div>' +
+      '</div>' +
+      '<button class="btn-reset-collection" data-col-id="' + colId + '" title="Resetear">↺ Resetear</button>' +
+      '</div><div class="categories-grid">';
+
+    var cats = Object.keys(colData);
+    for (var ki=0; ki<cats.length; ki++) {
+      var catName = cats[ki];
+      var catData = colData[catName];
+      var cs = getCategoryStats(colId, catName);
+      var collapsed = catData.collapsed ? ' collapsed' : '';
+
+      html += '<div class="category-card' + collapsed + '" data-col="' + colId + '" data-cat="' + escapeHtml(catName) + '">' +
+        '<div class="category-card-header" data-toggle-cat="' + escapeHtml(catName) + '">' +
+        '<div class="category-name-block">' +
+        '<span class="category-icon">' + catData.icon + '</span>' +
+        '<div><div class="category-name">' + escapeHtml(catName) + '</div>' +
+        '<div class="category-count">' + cs.checked + ' / ' + cs.total + '</div></div>' +
+        '</div>' +
+        '<div class="category-header-right">' +
+        '<div class="category-progress-ring">' + buildRingSVG(cs.checked, cs.total) + '</div>' +
+        '<span class="category-chevron">▾</span>' +
+        '</div></div>' +
+        '<ul class="category-items-list">';
+
+      for (var ii=0; ii<catData.items.length; ii++) {
+        var item = catData.items[ii];
+        var chk = item.checked ? ' checked' : '';
+        html += '<li class="item-row' + chk + '" data-col="' + colId + '" data-cat="' + escapeHtml(catName) + '" data-item-id="' + item.id + '" tabindex="0" role="checkbox" aria-checked="' + item.checked + '">' +
+          '<div class="item-checkbox-wrap"><span class="checkmark">✓</span></div>' +
+          '<span class="item-label">' + escapeHtml(item.name) + '</span>' +
+          '<div class="item-actions">' +
+            '<button class="item-edit-btn" data-edit-col="' + colId + '" data-edit-cat="' + escapeHtml(catName) + '" data-edit-item="' + item.id + '" title="Editar">✎</button>' +
+            '<button class="item-delete-btn" data-delete-col="' + colId + '" data-delete-cat="' + escapeHtml(catName) + '" data-delete-item="' + item.id + '" title="Borrar">🗑</button>' +
+          '</div>' +
+          '</li>';
+      }
+
+      html += '</ul>' +
+        '<button class="add-item-btn" data-add-col="' + colId + '" data-add-cat="' + escapeHtml(catName) + '">' +
+        '<span class="plus-icon">+</span>Añadir elemento</button>' +
+        '</div>';
+    }
+
+    html += '</div>';
+    collectionViewEl.innerHTML = html;
+    attachListeners();
+  }
+
+  // ── EVENT LISTENERS ───────────────────────────────────
+  function attachListeners() {
+    // Toggle category
+    var headers = collectionViewEl.querySelectorAll('[data-toggle-cat]');
+    for (var i=0; i<headers.length; i++) {
+      headers[i].addEventListener('click', function() {
+        var card    = this.closest('.category-card');
+        var colId   = card.dataset.col;
+        var catName = card.dataset.cat;
+        state.data[colId][catName].collapsed = !state.data[colId][catName].collapsed;
+        card.classList.toggle('collapsed');
+        saveState(state);
+      });
+    }
+
+    // Toggle item checked
+    var rows = collectionViewEl.querySelectorAll('.item-row');
+    for (var r=0; r<rows.length; r++) {
+      rows[r].addEventListener('click', function(e) {
+        if (e.target.closest('.item-edit-btn') || e.target.closest('.item-delete-btn')) return;
+        var colId   = this.dataset.col;
+        var catName = this.dataset.cat;
+        var itemId  = this.dataset.itemId;
+        var items   = state.data[colId][catName].items;
+        for (var j=0; j<items.length; j++) {
+          if (items[j].id === itemId) {
+            items[j].checked = !items[j].checked;
+            this.classList.toggle('checked', items[j].checked);
+            this.setAttribute('aria-checked', items[j].checked);
+            saveState(state);
+            updateGlobalProgress();
+            var card = this.closest('.category-card');
+            var cs = getCategoryStats(card.dataset.col, card.dataset.cat);
+            var ring = card.querySelector('.category-progress-ring');
+            if (ring) ring.innerHTML = buildRingSVG(cs.checked, cs.total);
+            var cnt = card.querySelector('.category-count');
+            if (cnt) cnt.textContent = cs.checked + ' / ' + cs.total;
+            // Category complete glow animation
+            if (cs.checked === cs.total && cs.total > 0) {
+              card.classList.remove('cat-complete');
+              void card.offsetWidth;
+              card.classList.add('cat-complete');
+              showToast('✅ ' + card.dataset.cat + ' ¡completa!');
+            } else {
+              card.classList.remove('cat-complete');
+            }
+            break;
+          }
+        }
+      });
+      rows[r].addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); this.click(); }
+      });
+    }
+
+    // Edit buttons
+    var editBtns = collectionViewEl.querySelectorAll('.item-edit-btn');
+    for (var eb=0; eb<editBtns.length; eb++) {
+      editBtns[eb].addEventListener('click', function(e) {
+        e.stopPropagation();
+        var colId   = this.dataset.editCol;
+        var catName = this.dataset.editCat;
+        var itemId  = this.dataset.editItem;
+        var items   = state.data[colId][catName].items;
+        for (var j=0; j<items.length; j++) {
+          if (items[j].id === itemId) {
+            editTarget = { colId:colId, catName:catName, itemId:itemId };
+            modalInput.value = items[j].name;
+            openModal(modalOverlay);
+            modalInput.focus(); modalInput.select();
+            break;
+          }
+        }
+      });
+    }
+
+    // Delete buttons
+    var deleteBtns = collectionViewEl.querySelectorAll('.item-delete-btn');
+    for (var db=0; db<deleteBtns.length; db++) {
+      deleteBtns[db].addEventListener('click', function(e) {
+        e.stopPropagation();
+        var colId   = this.dataset.deleteCol;
+        var catName = this.dataset.deleteCat;
+        var itemId  = this.dataset.deleteItem;
+        var items   = state.data[colId][catName].items;
+        for (var j=0; j<items.length; j++) {
+          if (items[j].id === itemId) {
+            lastDeletedItem = {
+              colId: colId,
+              catName: catName,
+              item: items[j],
+              index: j
+            };
+            items.splice(j, 1);
+            saveState(state);
+            renderCollection();
+            updateGlobalProgress();
+            showUndoToast('Elemento eliminado');
+            break;
+          }
+        }
+      });
+    }
+
+    // Add buttons
+    var addBtns = collectionViewEl.querySelectorAll('.add-item-btn');
+    for (var ab=0; ab<addBtns.length; ab++) {
+      addBtns[ab].addEventListener('click', function() {
+        addTarget = { colId: this.dataset.addCol, catName: this.dataset.addCat };
+        addModalInput.value = '';
+        openModal(addModalOverlay);
+        addModalInput.focus();
+      });
+    }
+
+    // Expand / Collapse all
+    var btnExpand = collectionViewEl.querySelector('#btn-expand-all');
+    if (btnExpand) btnExpand.addEventListener('click', function() {
+      var cats = Object.keys(state.data[state.activeCollection]);
+      for (var i=0; i<cats.length; i++) state.data[state.activeCollection][cats[i]].collapsed = false;
+      saveState(state); renderCollection();
+    });
+    var btnCollapse = collectionViewEl.querySelector('#btn-collapse-all');
+    if (btnCollapse) btnCollapse.addEventListener('click', function() {
+      var cats = Object.keys(state.data[state.activeCollection]);
+      for (var i=0; i<cats.length; i++) state.data[state.activeCollection][cats[i]].collapsed = true;
+      saveState(state); renderCollection();
+    });
+
+    // Reset collection
+    var resetBtn = collectionViewEl.querySelector('.btn-reset-collection');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function() {
+        var colId = this.dataset.colId;
+        if (!confirm('¿Resetear todos los checks de esta colección?')) return;
+        var cats = Object.values(state.data[colId]);
+        for (var i=0; i<cats.length; i++)
+          for (var j=0; j<cats[i].items.length; j++) cats[i].items[j].checked = false;
+        saveState(state);
+        renderCollection();
+        updateGlobalProgress();
+        showToast('✓ Colección reseteada');
+      });
+    }
+  }
+
+  // ── MODAL: EDIT ───────────────────────────────────────
+  modalSave.addEventListener('click', function() {
+    if (!editTarget) return;
+    var val = modalInput.value.trim();
+    if (!val) return;
+    var items = state.data[editTarget.colId][editTarget.catName].items;
+    for (var i=0; i<items.length; i++) {
+      if (items[i].id === editTarget.itemId) {
+        items[i].name = val;
+        saveState(state);
+        renderCollection();
+        updateGlobalProgress();
+        showToast('✓ Elemento actualizado');
+        break;
+      }
+    }
+    closeModal(modalOverlay);
+    editTarget = null;
+  });
+
+  modalDelete.addEventListener('click', function() {
+    if (!editTarget) return;
+    var cat = state.data[editTarget.colId][editTarget.catName];
+    cat.items = cat.items.filter(function(i){ return i.id !== editTarget.itemId; });
+    saveState(state);
+    renderCollection();
+    updateGlobalProgress();
+    showToast('🗑 Elemento eliminado');
+    closeModal(modalOverlay);
+    editTarget = null;
+  });
+
+  modalClose.addEventListener('click', function() { closeModal(modalOverlay); editTarget = null; });
+  modalOverlay.addEventListener('click', function(e) { if (e.target === modalOverlay) { closeModal(modalOverlay); editTarget = null; } });
+  modalInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') modalSave.click();
+    if (e.key === 'Escape') { closeModal(modalOverlay); editTarget = null; }
+  });
+
+  // ── MODAL: ADD ────────────────────────────────────────
+  addModalSave.addEventListener('click', function() {
+    if (!addTarget) return;
+    var val = addModalInput.value.trim();
+    if (!val) { addModalInput.focus(); return; }
+    var newItem = { id: genId(), name: val, checked: false };
+    state.data[addTarget.colId][addTarget.catName].items.push(newItem);
+    saveState(state);
+    renderCollection();
+    updateGlobalProgress();
+    showToast('➕ "' + val + '" añadido');
+    closeModal(addModalOverlay);
+    addTarget = null;
+  });
+
+  addModalCancel.addEventListener('click', function() { closeModal(addModalOverlay); addTarget = null; });
+  addModalClose.addEventListener('click',  function() { closeModal(addModalOverlay); addTarget = null; });
+  addModalOverlay.addEventListener('click', function(e) { if (e.target === addModalOverlay) { closeModal(addModalOverlay); addTarget = null; } });
+  addModalInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter')  addModalSave.click();
+    if (e.key === 'Escape') { closeModal(addModalOverlay); addTarget = null; }
+  });
+
+  // ── INIT ─────────────────────────────────────────────
+  if (!state.activeCollection) {
+    state.activeCollection = state.collections[0].id;
+    saveState(state);
+  }
+  renderTabs();
+  renderCollection();
+  updateGlobalProgress();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
+  </script>
+</body>
 </html>
