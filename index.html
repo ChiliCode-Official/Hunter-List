@@ -14,12 +14,12 @@
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="Hunter List — Héctor" />
   <meta property="og:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-  <meta property="og:image" content="/logo.png" />
+  <meta property="og:image" content="./logo.png" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Hunter List — Héctor" />
   <meta name="twitter:description" content="La lista de cacería de Héctor. Elegante, organizada y lista para el campo." />
-  <meta name="twitter:image" content="/logo.png" />
+  <meta name="twitter:image" content="./logo.png" />
 
   <title>Hunter List — Héctor</title>
   <style>
@@ -74,7 +74,7 @@
   --nav-h:      56px;
   --progress-h: 52px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font-body);
@@ -84,6 +84,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  overscroll-behavior-y: none;
 }
 body::before {
   content: '';
@@ -102,7 +103,8 @@ body::before {
 h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-transform: uppercase; }
 .main-header {
   position: sticky; top: 0; z-index: 100;
-  height: var(--header-h);
+  height: calc(var(--header-h) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
   background: rgba(8,15,8,0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -223,7 +225,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 .category-card.collapsed .add-item-btn { display: none; }
 .category-items-list { list-style: none; padding: 8px 0; }
 .item-row {
-  display: flex; align-items: center; gap: 10px; padding: 9px 18px;
+  display: flex; align-items: center; gap: 10px; padding: 12px 18px; min-height: 48px;
   border-bottom: 1px solid rgba(61,140,61,0.06);
   transition: background var(--tx-fast), opacity var(--tx-mid); cursor: pointer;
 }
@@ -249,9 +251,9 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 .item-edit-btn:hover { background: rgba(74,158,222,0.1) !important; border-color: var(--clr-blue-accent) !important; }
 .add-item-btn {
   display: flex; align-items: center; gap: 8px; width: 100%;
-  padding: 10px 18px; background: transparent; border: none;
+  padding: 14px 18px; background: transparent; border: none; min-height: 48px;
   border-top: 1px dashed rgba(61,140,61,0.18); color: var(--clr-text-muted);
-  font-size: 0.8rem; font-family: var(--font-body); cursor: pointer; transition: all var(--tx-fast);
+  font-size: 0.9rem; font-family: var(--font-body); cursor: pointer; transition: all var(--tx-fast);
 }
 .add-item-btn:hover { color: var(--clr-green-bright); background: rgba(61,140,61,0.05); }
 .add-item-btn .plus-icon {
@@ -261,10 +263,75 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 }
 .progress-bar-container {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-  height: var(--progress-h); background: rgba(8,15,8,0.95);
+  height: calc(var(--progress-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(8,15,8,0.95);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--clr-border-bright); display: flex; align-items: center;
 }
+@keyframes pulseSuccess { 0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); } 70% { box-shadow: 0 0 0 24px rgba(76, 175, 80, 0); } 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); } }
+.progress-bar-container.complete { animation: pulseSuccess 1s ease-out; border-top-color: var(--clr-green-bright); background: rgba(14,26,14,0.95); }
+.collection-actions { display: flex; gap: 12px; margin-top: 8px; align-items: center; }
+.btn-text { background: transparent; border: none; color: var(--clr-text-secondary); font-family: var(--font-body); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: color var(--tx-fast); padding: 4px 0; }
+.btn-text:hover { color: var(--clr-text-primary); text-decoration: underline; }
+/* Category complete glow */
+@keyframes catCompleteGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(76,175,80,0.7), var(--shadow-green); border-color: var(--clr-green-bright); }
+  40%  { box-shadow: 0 0 25px 8px rgba(76,175,80,0.4), var(--shadow-green); }
+  100% { box-shadow: var(--shadow-green); border-color: var(--clr-green-bright); }
+}
+.category-card.cat-complete { animation: catCompleteGlow 1.2s ease-out forwards; border-color: var(--clr-green-bright); }
+.category-card.cat-complete .category-card-header { background: rgba(45,90,45,0.55); }
+/* Sniper scope overlay */
+.sniper-overlay {
+  position: fixed; inset: 0; z-index: 500; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.5s ease;
+}
+.sniper-overlay.active { opacity: 1; pointer-events: all; }
+.sniper-overlay-bg {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.82);
+  animation: overlayFadeIn 0.5s ease forwards;
+}
+@keyframes overlayFadeIn { from { background: rgba(0,0,0,0); } to { background: rgba(0,0,0,0.82); } }
+.sniper-scope {
+  position: relative; width: 340px; height: 340px; z-index: 1;
+}
+@media (max-width: 640px) { .sniper-scope { width: 270px; height: 270px; } }
+.scope-ring {
+  position: absolute; inset: 0; border: 3px solid rgba(76,175,80,0.85);
+  border-radius: 50%; box-shadow: 0 0 40px rgba(76,175,80,0.3), inset 0 0 80px rgba(0,0,0,0.6);
+  overflow: hidden; animation: scopeZoomIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes scopeZoomIn { from { transform: scale(2.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* Crosshairs drawn on top of the ring's overflow:hidden circle */
+.scope-crosshair-h { position: absolute; width: 100%; height: 1px; top: 50%; left: 0; background: rgba(76,175,80,0.55); pointer-events: none; z-index: 3; }
+.scope-crosshair-v { position: absolute; height: 100%; width: 1px; left: 50%; top: 0; background: rgba(76,175,80,0.55); pointer-events: none; z-index: 3; }
+.scope-dot { position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; background: #f33; border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 10px rgba(255,30,30,0.9); z-index: 4; }
+.scope-tick { position: absolute; background: rgba(76,175,80,0.55); z-index: 3; }
+.scope-tick.h { height: 1px; width: 14px; top: 50%; }
+.scope-tick.v { width: 1px; height: 14px; left: 50%; }
+.scope-tick.h.t1 { left: 22%; } .scope-tick.h.t2 { left: 35%; } .scope-tick.h.t3 { right: 22%; } .scope-tick.h.t4 { right: 35%; }
+.scope-tick.v.t1 { top: 22%; } .scope-tick.v.t2 { top: 35%; } .scope-tick.v.t3 { bottom: 22%; } .scope-tick.v.t4 { bottom: 35%; }
+/* Animals walk through the scope */
+.scope-animal {
+  position: absolute; top: 50%; font-size: 3.2rem; line-height: 1;
+  transform: translateY(-50%); white-space: nowrap; z-index: 2;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+}
+@keyframes walkAcross  { 0% { left:-20%; opacity:0; } 5% { opacity:1; } 95% { opacity:1; } 100% { left:110%; opacity:0; } }
+@keyframes flyAcrossUp { 0% { left:-20%; top:50%; opacity:0; } 5% { opacity:1; } 60% { top:30%; } 95% { opacity:1; } 100% { left:110%; top:5%; opacity:0; } }
+.scope-animal.deer  { animation: walkAcross  1.8s 0.3s ease-in-out both; }
+.scope-animal.duck  { animation: walkAcross  1.8s 2.3s ease-in-out both; font-size: 2.6rem; }
+.scope-animal.dove  { animation: flyAcrossUp 1.8s 4.3s ease-in-out both; font-size: 2.4rem; }
+.scope-text {
+  position: absolute; bottom: -52px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-heading); font-size: 1.25rem; letter-spacing: 0.18em;
+  color: var(--clr-green-bright); text-transform: uppercase; white-space: nowrap;
+  text-shadow: 0 0 20px rgba(76,175,80,0.7);
+  animation: textPop 0.5s 0.5s ease both;
+}
+@keyframes textPop { from { opacity:0; transform: translateX(-50%) translateY(10px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
 .progress-bar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; display: flex; align-items: center; gap: 14px; }
 .progress-label { font-family: var(--font-heading); font-size: 0.75rem; letter-spacing: 0.12em; color: var(--clr-text-secondary); white-space: nowrap; min-width: 80px; }
 .progress-track { flex: 1; height: 8px; background: rgba(61,140,61,0.1); border-radius: var(--radius-pill); overflow: hidden; border: 1px solid rgba(61,140,61,0.15); }
@@ -296,7 +363,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 .modal-close:hover { border-color: var(--clr-danger); color: var(--clr-danger-hover); }
 .modal-body { padding: 22px; }
 .modal-label { display: block; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--clr-text-muted); text-transform: uppercase; margin-bottom: 8px; }
-.modal-input { width: 100%; background: rgba(8,15,8,0.8); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 12px 16px; font-family: var(--font-body); font-size: 0.95rem; color: var(--clr-text-primary); outline: none; transition: border-color var(--tx-fast), box-shadow var(--tx-fast); }
+.modal-input { width: 100%; background: rgba(8,15,8,0.8); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 12px 16px; font-family: var(--font-body); font-size: 16px; color: var(--clr-text-primary); outline: none; transition: border-color var(--tx-fast), box-shadow var(--tx-fast); }
 .modal-input:focus { border-color: var(--clr-green-accent); box-shadow: 0 0 0 3px rgba(61,140,61,0.15); }
 .modal-input::placeholder { color: var(--clr-text-muted); }
 .modal-footer { display: flex; gap: 10px; justify-content: flex-end; padding: 14px 22px 18px; border-top: 1px solid var(--clr-border); }
@@ -344,7 +411,7 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
     <header class="main-header">
       <div class="header-inner">
         <div class="header-logo-block">
-          <img src="/logo.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
+          <img src="https://i.imgur.com/GteuRef.png" alt="Hunter List Logo" class="main-logo" id="main-logo" />
           <div class="header-titles">
             <h1 class="app-title">Hunter List</h1>
             <span class="app-owner">Héctor's Collection</span>
@@ -405,6 +472,32 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
         <button class="btn btn-secondary" id="add-modal-cancel">Cancelar</button>
         <button class="btn btn-primary" id="add-modal-save">➕ Añadir</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Sniper Scope Overlay (animal parade) -->
+  <div class="sniper-overlay" id="sniper-overlay">
+    <div class="sniper-overlay-bg"></div>
+    <div class="sniper-scope">
+      <!-- Ring clips animals inside the circle -->
+      <div class="scope-ring">
+        <div class="scope-animal deer">🦌</div>
+        <div class="scope-animal duck">🦆</div>
+        <div class="scope-animal dove">🐦</div>
+      </div>
+      <!-- Crosshairs & ticks sit outside ring so they're always visible -->
+      <div class="scope-crosshair-h"></div>
+      <div class="scope-crosshair-v"></div>
+      <div class="scope-tick h t1"></div>
+      <div class="scope-tick h t2"></div>
+      <div class="scope-tick h t3"></div>
+      <div class="scope-tick h t4"></div>
+      <div class="scope-tick v t1"></div>
+      <div class="scope-tick v t2"></div>
+      <div class="scope-tick v t3"></div>
+      <div class="scope-tick v t4"></div>
+      <div class="scope-dot"></div>
+      <div class="scope-text">¡Lista Completa!</div>
     </div>
   </div>
 
@@ -474,13 +567,13 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 
   var DEFAULT_COLLECTIONS = [
     { id: "patos",   name: "Patos",   icon: "🦆", subtitle: "Cacería de Patos", color: "blue" },
-    { id: "palomas", name: "Palomas", icon: "🕊️", subtitle: "Cacería de Palomas", color: "blue" },
+    { id: "palomas", name: "Palomas", icon: "🐦", subtitle: "Cacería de Palomas", color: "blue" },
     { id: "venados", name: "Venados", icon: "🦌", subtitle: "Cacería de Venados", color: "green" },
-    { id: "montana", name: "Montaña", icon: "⛰️", subtitle: "Cacería de Montaña", color: "green" },
-    { id: "africa",  name: "África",  icon: "🦁", subtitle: "Safari en África", color: "gold" }
+    { id: "montana", name: "Montaña", icon: "🏔️", subtitle: "Cacería de Montaña", color: "green" },
+    { id: "africa",  name: "África",  icon: "🐘", subtitle: "Safari en África", color: "gold" }
   ];
 
-  var STORAGE_KEY = "hunterlist_v2";
+  var STORAGE_KEY = "hunterlist_v3";
 
   function buildDefaultState() {
     var data = {};
@@ -625,23 +718,51 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
 
   // ── RENDER HEADER STATS ───────────────────────────────
   function renderHeaderStats() {
-    var totalAll=0, checkedAll=0;
-    for (var i=0; i<state.collections.length; i++) {
-      var s = getCollectionStats(state.collections[i].id);
-      totalAll += s.total; checkedAll += s.checked;
-    }
-    headerStatsEl.innerHTML = '<div class="stat-pill">🎯 ' + checkedAll + ' / ' + totalAll + ' Total</div>';
+    var s = getCollectionStats(state.activeCollection);
+    headerStatsEl.innerHTML = '<div class="stat-pill">🎯 ' + s.checked + ' / ' + s.total + ' Listo</div>';
   }
 
   // ── UPDATE PROGRESS ───────────────────────────────────
+  var _wasComplete = false;
   function updateGlobalProgress() {
     var s = getCollectionStats(state.activeCollection);
     var pct = s.total > 0 ? Math.round((s.checked/s.total)*100) : 0;
     progressFillEl.style.width = pct + '%';
     progressLabelEl.textContent = s.checked + ' / ' + s.total + ' Items';
     progressPctEl.textContent   = pct + '%';
+    
+    // Show sniper scope when full collection reaches 100%
+    if (pct === 100 && s.total > 0 && !_wasComplete) {
+      _wasComplete = true;
+      showSniperScope();
+    } else if (pct < 100) {
+      _wasComplete = false;
+    }
+    
     renderHeaderStats();
     renderTabs();
+  }
+
+  // ── SNIPER SCOPE ────────────────────────────────────
+  // Total sequence: deer(0.3s→1.8s) + gap + duck(2.3s→3.8s) + gap + dove(4.3s→6.1s) ≈ 6.5s
+  var SCOPE_DURATION = 6800;
+  function showSniperScope() {
+    var overlay = document.getElementById('sniper-overlay');
+    if (!overlay) return;
+    // Re-clone the scope to restart CSS animations
+    var old = overlay.querySelector('.sniper-scope');
+    var fresh = old.cloneNode(true);
+    old.parentNode.replaceChild(fresh, old);
+    overlay.classList.add('active');
+    var closeTimer = setTimeout(function() {
+      overlay.classList.remove('active');
+    }, SCOPE_DURATION);
+    function dismiss() {
+      clearTimeout(closeTimer);
+      overlay.classList.remove('active');
+      overlay.removeEventListener('click', dismiss);
+    }
+    overlay.addEventListener('click', dismiss);
   }
 
   // ── RENDER COLLECTION ────────────────────────────────
@@ -662,7 +783,10 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
       '<div class="collection-title-block">' +
       '<span class="collection-icon">' + colCfg.icon + '</span>' +
       '<div><div class="collection-title">' + escapeHtml(colCfg.name) + '</div>' +
-      '<div class="collection-subtitle">' + escapeHtml(colCfg.subtitle) + ' · ' + s.checked + ' de ' + s.total + ' listos</div></div>' +
+      '<div class="collection-subtitle">' + escapeHtml(colCfg.subtitle) + ' · ' + s.checked + ' de ' + s.total + ' listos</div>' +
+      '<div class="collection-actions">' +
+      '<button class="btn-text" id="btn-expand-all">Abrir todo</button> <span style="color:var(--clr-text-muted);font-size:0.7rem">•</span> <button class="btn-text" id="btn-collapse-all">Cerrar todo</button>' +
+      '</div></div>' +
       '</div>' +
       '<button class="btn-reset-collection" data-col-id="' + colId + '" title="Resetear">↺ Resetear</button>' +
       '</div><div class="categories-grid">';
@@ -745,6 +869,15 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
             if (ring) ring.innerHTML = buildRingSVG(cs.checked, cs.total);
             var cnt = card.querySelector('.category-count');
             if (cnt) cnt.textContent = cs.checked + ' / ' + cs.total;
+            // Category complete glow animation
+            if (cs.checked === cs.total && cs.total > 0) {
+              card.classList.remove('cat-complete');
+              void card.offsetWidth;
+              card.classList.add('cat-complete');
+              showToast('✅ ' + card.dataset.cat + ' ¡completa!');
+            } else {
+              card.classList.remove('cat-complete');
+            }
             break;
           }
         }
@@ -785,6 +918,20 @@ h1, h2, h3 { font-family: var(--font-heading); letter-spacing: 0.05em; text-tran
         addModalInput.focus();
       });
     }
+
+    // Expand / Collapse all
+    var btnExpand = collectionViewEl.querySelector('#btn-expand-all');
+    if (btnExpand) btnExpand.addEventListener('click', function() {
+      var cats = Object.keys(state.data[state.activeCollection]);
+      for (var i=0; i<cats.length; i++) state.data[state.activeCollection][cats[i]].collapsed = false;
+      saveState(state); renderCollection();
+    });
+    var btnCollapse = collectionViewEl.querySelector('#btn-collapse-all');
+    if (btnCollapse) btnCollapse.addEventListener('click', function() {
+      var cats = Object.keys(state.data[state.activeCollection]);
+      for (var i=0; i<cats.length; i++) state.data[state.activeCollection][cats[i]].collapsed = true;
+      saveState(state); renderCollection();
+    });
 
     // Reset collection
     var resetBtn = collectionViewEl.querySelector('.btn-reset-collection');

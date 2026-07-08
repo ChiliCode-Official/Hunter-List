@@ -116,14 +116,9 @@ function renderTabs() {
 
 // ── Render Header Stats ──────────────────────────────
 function renderHeaderStats() {
-  let totalAll = 0, checkedAll = 0;
-  for (const col of state.collections) {
-    const s = getCollectionStats(col.id);
-    totalAll   += s.total;
-    checkedAll += s.checked;
-  }
+  const { total, checked } = getCollectionStats(state.activeCollection);
   headerStatsEl.innerHTML = `
-    <div class="stat-pill">🎯 ${checkedAll} / ${totalAll} Total</div>
+    <div class="stat-pill">🎯 ${checked} / ${total} Listo</div>
   `;
 }
 
@@ -134,6 +129,18 @@ function updateGlobalProgress() {
   progressFillEl.style.width = pct + '%';
   progressLabelEl.textContent = `${checked} / ${total} Items`;
   progressPctEl.textContent   = pct + '%';
+
+  const container = document.getElementById('progress-bar-container');
+  if (container) {
+    if (pct === 100 && total > 0) {
+      container.classList.remove('complete');
+      void container.offsetWidth; // trigger reflow
+      container.classList.add('complete');
+    } else {
+      container.classList.remove('complete');
+    }
+  }
+
   renderHeaderStats();
   renderTabs(); // Update badge counters
 }
@@ -158,6 +165,11 @@ function renderCollection() {
         <div>
           <div class="collection-title">${colCfg.name}</div>
           <div class="collection-subtitle">${colCfg.subtitle} · ${checked} de ${total} listos</div>
+          <div class="collection-actions">
+            <button class="btn-text" id="btn-expand-all">Abrir todo</button>
+            <span style="color:var(--clr-text-muted);font-size:0.7rem">•</span>
+            <button class="btn-text" id="btn-collapse-all">Cerrar todo</button>
+          </div>
         </div>
       </div>
       <button class="btn-reset-collection" data-col-id="${colId}" title="Resetear esta colección">
@@ -315,6 +327,21 @@ function attachCollectionListeners() {
     renderCollection();
     updateGlobalProgress();
     showToast('✓ Colección reseteada');
+  });
+
+  // Expand / Collapse all
+  collectionViewEl.querySelector('#btn-expand-all')?.addEventListener('click', () => {
+    const cats = Object.keys(state.data[state.activeCollection]);
+    for (const cat of cats) state.data[state.activeCollection][cat].collapsed = false;
+    saveState(state);
+    renderCollection();
+  });
+
+  collectionViewEl.querySelector('#btn-collapse-all')?.addEventListener('click', () => {
+    const cats = Object.keys(state.data[state.activeCollection]);
+    for (const cat of cats) state.data[state.activeCollection][cat].collapsed = true;
+    saveState(state);
+    renderCollection();
   });
 }
 

@@ -78,7 +78,7 @@ const DEFAULT_COLLECTIONS = [
   {
     id: "palomas",
     name: "Palomas",
-    icon: "🕊️",
+    icon: "🐦",
     subtitle: "Cacería de Palomas",
     color: "blue"
   },
@@ -92,21 +92,21 @@ const DEFAULT_COLLECTIONS = [
   {
     id: "montana",
     name: "Montaña",
-    icon: "⛰️",
+    icon: "🏔️",
     subtitle: "Cacería de Montaña",
     color: "green"
   },
   {
     id: "africa",
     name: "África",
-    icon: "🦁",
+    icon: "🐘",
     subtitle: "Safari en África",
     color: "gold"
   }
 ];
 
 // ── Storage Key ─────────────────────────────────────
-const STORAGE_KEY = "hunterlist_v2";
+const STORAGE_KEY = "hunterlist_v3";
 
 // ── Load State ──────────────────────────────────────
 function loadState() {
